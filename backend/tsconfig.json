@@ -15,5 +15,10 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["src/**/*.ts", "test/**/*.ts", ".eslintrc.js"]
+  "include": ["src/**/*.ts", "test/**/*.ts"],
+  "exclude": [
+    ".eslintrc.mjs",
+    "dist",
+    "node_modules"
+  ]
 }

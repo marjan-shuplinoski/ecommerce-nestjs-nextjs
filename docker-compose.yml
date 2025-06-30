@@ -1,0 +1,26 @@
+version: '3.8'
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ecommerce-backend
+    env_file:
+      - ./backend/.env
+    ports:
+      - '5000:5000'
+    restart: unless-stopped
+    volumes:
+      - ./backend:/app
+    depends_on:
+      - mongo
+  mongo:
+    image: mongo:7
+    container_name: ecommerce-mongo
+    restart: unless-stopped
+    ports:
+      - '27018:27017'
+    volumes:
+      - mongo_data:/data/db
+volumes:
+  mongo_data:

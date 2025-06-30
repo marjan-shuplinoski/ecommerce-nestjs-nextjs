@@ -5,10 +5,10 @@
       "name": "Setup Backend Project Structure and Core Configuration",
       "description": "Create the basic NestJS project structure with TypeScript, ESLint, Prettier, and pnpm configuration. Setup feature-sliced architecture folders and basic app module.",
       "notes": "Use pnpm only, never npm/yarn. Enable strict TypeScript mode. Follow project.instructions.md standards.",
-      "status": "in_progress",
+      "status": "completed",
       "dependencies": [],
       "createdAt": "2025-06-30T07:32:56.567Z",
-      "updatedAt": "2025-06-30T08:23:10.125Z",
+      "updatedAt": "2025-06-30T10:11:06.712Z",
       "relatedFiles": [
         {
           "path": "backend/package.json",
@@ -38,244 +38,9 @@
       ],
       "implementationGuide": "1. Create backend/ folder\n2. Initialize NestJS project with CLI\n3. Configure pnpm workspace\n4. Setup strict TypeScript config\n5. Configure ESLint + Prettier\n6. Create feature-sliced folder structure (/features, /shared)\n7. Setup basic app.module.ts with imports\n8. Create main.ts with CORS and security headers",
       "verificationCriteria": "Project builds successfully with pnpm, linting passes, TypeScript strict mode enabled, folder structure matches feature-sliced architecture",
-      "analysisResult": "Build a complete e-commerce platform with NestJS backend and Next.js frontend, implementing a notification system with color-coded responses (red=error, orange=warning, green=success) for all user actions. Backend-first development approach with atomic tasks focusing on feature-sliced architecture, strict TypeScript, and comprehensive testing. Each task should be small, achievable, and include notification integration requirements."
-    },
-    {
-      "id": "ce8f1629-d9cd-4e01-b9ce-08a0759afe86",
-      "name": "Setup Database Connection and Configuration Module",
-      "description": "Implement MongoDB connection with Mongoose, environment configuration with Joi validation, and database health checks.",
-      "notes": "Use environment variables for all configuration. Implement proper error handling for database connection failures.",
-      "status": "pending",
-      "dependencies": [
-        {
-          "taskId": "f050c0f4-0a92-4525-bc32-10e2aba7cde8"
-        }
-      ],
-      "createdAt": "2025-06-30T07:32:56.567Z",
-      "updatedAt": "2025-06-30T07:32:56.567Z",
-      "relatedFiles": [
-        {
-          "path": "backend/src/shared/config/config.module.ts",
-          "type": "CREATE",
-          "description": "Configuration module with Joi validation"
-        },
-        {
-          "path": "backend/src/shared/database/database.module.ts",
-          "type": "CREATE",
-          "description": "MongoDB connection module"
-        },
-        {
-          "path": "backend/src/shared/health/health.controller.ts",
-          "type": "CREATE",
-          "description": "Health check endpoints"
-        },
-        {
-          "path": "backend/.env.example",
-          "type": "CREATE",
-          "description": "Environment variables template"
-        }
-      ],
-      "implementationGuide": "1. Install mongoose and @nestjs/mongoose\n2. Create shared/config module with Joi validation\n3. Setup database module with connection options\n4. Create environment variables schema\n5. Add database health check endpoint\n6. Configure connection retry logic\n7. Add database connection logging",
-      "verificationCriteria": "Database connects successfully, environment validation works, health check endpoint returns database status, configuration module validates all required environment variables",
-      "analysisResult": "Build a complete e-commerce platform with NestJS backend and Next.js frontend, implementing a notification system with color-coded responses (red=error, orange=warning, green=success) for all user actions. Backend-first development approach with atomic tasks focusing on feature-sliced architecture, strict TypeScript, and comprehensive testing. Each task should be small, achievable, and include notification integration requirements."
-    },
-    {
-      "id": "2c7bde61-0364-45d1-9f4f-bcab3979249a",
-      "name": "Create Notification System Infrastructure",
-      "description": "Build a centralized notification system with color-coded responses (red=error, orange=warning, green=success) that can be used across all features for consistent user feedback.",
-      "notes": "This system will be used by all features to provide consistent feedback. Colors: red=error, orange=warning, green=success.",
-      "status": "pending",
-      "dependencies": [
-        {
-          "taskId": "f050c0f4-0a92-4525-bc32-10e2aba7cde8"
-        }
-      ],
-      "createdAt": "2025-06-30T07:32:56.567Z",
-      "updatedAt": "2025-06-30T07:32:56.567Z",
-      "relatedFiles": [
-        {
-          "path": "backend/src/shared/notifications/notification.service.ts",
-          "type": "CREATE",
-          "description": "Core notification service with color-coded methods"
-        },
-        {
-          "path": "backend/src/shared/notifications/notification.interfaces.ts",
-          "type": "CREATE",
-          "description": "Notification type definitions and enums"
-        },
-        {
-          "path": "backend/src/shared/notifications/notification.interceptor.ts",
-          "type": "CREATE",
-          "description": "Response interceptor for automatic notifications"
-        },
-        {
-          "path": "backend/src/shared/notifications/notification.dto.ts",
-          "type": "CREATE",
-          "description": "Notification response DTOs"
-        }
-      ],
-      "implementationGuide": "1. Create shared/notifications module\n2. Define notification interfaces and enums\n3. Create NotificationService with color-coded methods\n4. Implement notification response interceptor\n5. Create notification DTOs for consistent structure\n6. Add notification middleware for automatic responses\n7. Create utility functions for quick notifications",
-      "verificationCriteria": "Notification service creates consistent color-coded responses, interceptor works with all endpoints, notification structure is standardized across the application",
-      "analysisResult": "Build a complete e-commerce platform with NestJS backend and Next.js frontend, implementing a notification system with color-coded responses (red=error, orange=warning, green=success) for all user actions. Backend-first development approach with atomic tasks focusing on feature-sliced architecture, strict TypeScript, and comprehensive testing. Each task should be small, achievable, and include notification integration requirements."
-    },
-    {
-      "id": "32cfd9a3-d14f-4058-8297-22015d9a0e68",
-      "name": "Implement User Schema and Database Model",
-      "description": "Create the User schema with Mongoose, including validation, indexes, and password hashing. Implement user roles enum and address subdocuments.",
-      "notes": "Follow the exact schema from README.md. Use bcrypt for password hashing. Add proper validation for email format.",
-      "status": "pending",
-      "dependencies": [
-        {
-          "taskId": "ce8f1629-d9cd-4e01-b9ce-08a0759afe86"
-        }
-      ],
-      "createdAt": "2025-06-30T07:32:56.567Z",
-      "updatedAt": "2025-06-30T07:32:56.567Z",
-      "relatedFiles": [
-        {
-          "path": "backend/src/features/users/schemas/user.schema.ts",
-          "type": "CREATE",
-          "description": "Mongoose user schema with validation"
-        },
-        {
-          "path": "backend/src/features/users/enums/user-role.enum.ts",
-          "type": "CREATE",
-          "description": "User role enumeration"
-        },
-        {
-          "path": "backend/src/features/users/types/user.types.ts",
-          "type": "CREATE",
-          "description": "User type definitions"
-        },
-        {
-          "path": "backend/src/features/users/schemas/address.schema.ts",
-          "type": "CREATE",
-          "description": "Address subdocument schema"
-        }
-      ],
-      "implementationGuide": "1. Create users/schemas/user.schema.ts\n2. Define User interface with all fields from README\n3. Add mongoose decorators and validation\n4. Implement password hashing with bcrypt\n5. Create user role enum\n6. Add indexes for email, status\n7. Create address subdocument schema\n8. Add pre/post hooks for password hashing",
-      "verificationCriteria": "User schema validates correctly, password hashing works, indexes are created, schema matches README specification exactly",
-      "analysisResult": "Build a complete e-commerce platform with NestJS backend and Next.js frontend, implementing a notification system with color-coded responses (red=error, orange=warning, green=success) for all user actions. Backend-first development approach with atomic tasks focusing on feature-sliced architecture, strict TypeScript, and comprehensive testing. Each task should be small, achievable, and include notification integration requirements."
-    },
-    {
-      "id": "9590eb50-5836-45e0-bab8-f71f50410d2c",
-      "name": "Create JWT Authentication Service and Strategy",
-      "description": "Implement JWT service with access/refresh tokens, Passport JWT strategy, and token validation. Include notification integration for auth events.",
-      "notes": "Integrate notification system: green for successful auth, red for failures, orange for warnings (expired tokens, etc.)",
-      "status": "pending",
-      "dependencies": [
-        {
-          "taskId": "32cfd9a3-d14f-4058-8297-22015d9a0e68"
-        },
-        {
-          "taskId": "2c7bde61-0364-45d1-9f4f-bcab3979249a"
-        }
-      ],
-      "createdAt": "2025-06-30T07:32:56.567Z",
-      "updatedAt": "2025-06-30T07:32:56.567Z",
-      "relatedFiles": [
-        {
-          "path": "backend/src/features/auth/services/jwt.service.ts",
-          "type": "CREATE",
-          "description": "JWT token management service"
-        },
-        {
-          "path": "backend/src/features/auth/strategies/jwt.strategy.ts",
-          "type": "CREATE",
-          "description": "Passport JWT strategy"
-        },
-        {
-          "path": "backend/src/features/auth/types/jwt-payload.types.ts",
-          "type": "CREATE",
-          "description": "JWT payload interfaces"
-        },
-        {
-          "path": "backend/src/features/auth/services/auth.service.ts",
-          "type": "CREATE",
-          "description": "Main authentication service"
-        }
-      ],
-      "implementationGuide": "1. Install @nestjs/jwt, @nestjs/passport, passport-jwt\n2. Create auth/services/jwt.service.ts\n3. Implement JWT strategy with Passport\n4. Create token generation/validation methods\n5. Add refresh token logic\n6. Integrate notification system for auth events\n7. Create JWT payload interfaces\n8. Add token blacklisting mechanism",
-      "verificationCriteria": "JWT tokens generate correctly, strategy validates tokens, refresh mechanism works, notification system integrated for all auth events",
-      "analysisResult": "Build a complete e-commerce platform with NestJS backend and Next.js frontend, implementing a notification system with color-coded responses (red=error, orange=warning, green=success) for all user actions. Backend-first development approach with atomic tasks focusing on feature-sliced architecture, strict TypeScript, and comprehensive testing. Each task should be small, achievable, and include notification integration requirements."
-    },
-    {
-      "id": "4948d22d-cbaf-4c9e-99b7-ec82b11f3f60",
-      "name": "Implement Auth Guards and RBAC System",
-      "description": "Create JWT auth guard, roles guard, and RBAC decorators for protecting routes. Include notification responses for unauthorized access.",
-      "notes": "Use notification system: red for unauthorized access, orange for insufficient permissions. Guards should be reusable across all features.",
-      "status": "pending",
-      "dependencies": [
-        {
-          "taskId": "9590eb50-5836-45e0-bab8-f71f50410d2c"
-        }
-      ],
-      "createdAt": "2025-06-30T07:32:56.567Z",
-      "updatedAt": "2025-06-30T07:32:56.567Z",
-      "relatedFiles": [
-        {
-          "path": "backend/src/features/auth/guards/jwt-auth.guard.ts",
-          "type": "CREATE",
-          "description": "JWT authentication guard"
-        },
-        {
-          "path": "backend/src/features/auth/guards/roles.guard.ts",
-          "type": "CREATE",
-          "description": "Role-based access control guard"
-        },
-        {
-          "path": "backend/src/features/auth/decorators/roles.decorator.ts",
-          "type": "CREATE",
-          "description": "Roles decorator for RBAC"
-        },
-        {
-          "path": "backend/src/features/auth/enums/permissions.enum.ts",
-          "type": "CREATE",
-          "description": "Permissions enumeration"
-        }
-      ],
-      "implementationGuide": "1. Create auth/guards/jwt-auth.guard.ts\n2. Create auth/guards/roles.guard.ts\n3. Implement @Roles decorator\n4. Create permissions enum\n5. Add RBAC service for permission checking\n6. Integrate notifications for unauthorized access\n7. Create guard exception filters\n8. Add route protection helpers",
-      "verificationCriteria": "Guards protect routes correctly, RBAC system enforces permissions, notification system provides clear feedback for authorization failures",
-      "analysisResult": "Build a complete e-commerce platform with NestJS backend and Next.js frontend, implementing a notification system with color-coded responses (red=error, orange=warning, green=success) for all user actions. Backend-first development approach with atomic tasks focusing on feature-sliced architecture, strict TypeScript, and comprehensive testing. Each task should be small, achievable, and include notification integration requirements."
-    },
-    {
-      "id": "d82e18dc-ef7c-4c7a-b294-552c07bdd8ce",
-      "name": "Create Auth DTOs and Validation",
-      "description": "Implement all authentication DTOs (register, login, reset password) with comprehensive validation and notification integration.",
-      "notes": "Use class-validator decorators. Integrate notifications: red for validation errors, green for successful validation.",
-      "status": "pending",
-      "dependencies": [
-        {
-          "taskId": "9590eb50-5836-45e0-bab8-f71f50410d2c"
-        }
-      ],
-      "createdAt": "2025-06-30T07:32:56.567Z",
-      "updatedAt": "2025-06-30T07:32:56.567Z",
-      "relatedFiles": [
-        {
-          "path": "backend/src/features/auth/dto/register.dto.ts",
-          "type": "CREATE",
-          "description": "User registration DTO with validation"
-        },
-        {
-          "path": "backend/src/features/auth/dto/login.dto.ts",
-          "type": "CREATE",
-          "description": "User login DTO with validation"
-        },
-        {
-          "path": "backend/src/features/auth/dto/reset-password.dto.ts",
-          "type": "CREATE",
-          "description": "Password reset DTO"
-        },
-        {
-          "path": "backend/src/features/auth/dto/auth-response.dto.ts",
-          "type": "CREATE",
-          "description": "Authentication response DTOs"
-        }
-      ],
-      "implementationGuide": "1. Create auth/dto/register.dto.ts with validation\n2. Create auth/dto/login.dto.ts with validation\n3. Create auth/dto/reset-password.dto.ts\n4. Add custom validators for email, password strength\n5. Implement validation pipes\n6. Add notification responses for validation errors\n7. Create response DTOs for auth endpoints\n8. Add transform decorators where needed",
-      "verificationCriteria": "All DTOs validate input correctly, validation errors return proper notifications, response DTOs provide consistent structure",
-      "analysisResult": "Build a complete e-commerce platform with NestJS backend and Next.js frontend, implementing a notification system with color-coded responses (red=error, orange=warning, green=success) for all user actions. Backend-first development approach with atomic tasks focusing on feature-sliced architecture, strict TypeScript, and comprehensive testing. Each task should be small, achievable, and include notification integration requirements."
+      "analysisResult": "Build a complete e-commerce platform with NestJS backend and Next.js frontend, implementing a notification system with color-coded responses (red=error, orange=warning, green=success) for all user actions. Backend-first development approach with atomic tasks focusing on feature-sliced architecture, strict TypeScript, and comprehensive testing. Each task should be small, achievable, and include notification integration requirements.",
+      "summary": "Setup Backend Project Structure and Core Configuration is complete: feature-sliced architecture, strict TypeScript, pnpm, ESLint/Prettier, .env, automation, and all dependent subtasks (tests, docs, frontend) are linked and ready. All requirements and standards are met.",
+      "completedAt": "2025-06-30T10:11:06.710Z"
     },
     {
       "id": "5a71ba80-6c0b-4ded-8fda-f137841b941a",
@@ -1502,6 +1267,176 @@
       "implementationGuide": "1. Setup Cypress testing framework\n2. Create e2e tests for authentication flow\n3. Test product catalog and search functionality\n4. Create cart and checkout flow tests\n5. Test admin dashboard and management features\n6. Implement notification system testing\n7. Add visual regression testing\n8. Create test data fixtures\n9. Setup CI integration for tests",
       "verificationCriteria": "All e2e tests pass consistently, notification system is thoroughly tested, user flows work end-to-end, tests run in CI pipeline, visual regressions are caught",
       "analysisResult": "Complete the e-commerce platform with Next.js frontend tasks that connect to the NestJS backend. Implement feature-sliced architecture, notification system integration (red=error, orange=warning, green=success), and comprehensive user interface for all e-commerce features. Frontend tasks should depend on corresponding backend tasks and provide atomic, achievable implementation steps."
+    },
+    {
+      "id": "24dbeb0a-283a-445a-bf12-599ef6d3dad3",
+      "name": "Frontend Integration: Scaffold and Connect Next.js App",
+      "description": "Scaffold a Next.js 14+ app with TypeScript, pnpm, Tailwind CSS, ESLint, Prettier, and feature-sliced architecture. Set up API client, shared types, and initial integration with backend endpoints. Prepare for authentication, notification, and product catalog UI.",
+      "status": "pending",
+      "dependencies": [
+        {
+          "taskId": "f050c0f4-0a92-4525-bc32-10e2aba7cde8"
+        }
+      ],
+      "createdAt": "2025-06-30T10:08:47.634Z",
+      "updatedAt": "2025-06-30T10:09:43.748Z",
+      "relatedFiles": [
+        {
+          "path": "frontend/",
+          "type": "CREATE",
+          "description": "Next.js app root"
+        },
+        {
+          "path": "backend/src/shared/types/",
+          "type": "REFERENCE",
+          "description": "Shared types for API contracts"
+        }
+      ],
+      "implementationGuide": "- Create frontend/ folder with Next.js 14+ (app router, TypeScript, pnpm)\n- Add Tailwind CSS, ESLint, Prettier\n- Organize code by feature (feature-sliced)\n- Set up API client and shared types\n- Integrate with backend endpoints (auth, products, etc.)\n- Prepare for notification and catalog UI\n- Commit with 'feat:' prefix and update docs",
+      "verificationCriteria": "- Next.js app is scaffolded and runs\n- Feature-sliced structure is present\n- API client and shared types are set up\n- Initial backend integration works (auth/products)\n- Lint, format, and CI pass"
+    },
+    {
+      "id": "ce8f1629-d9cd-4e01-b9ce-08a0759afe86",
+      "name": "Setup Database Connection and Configuration Module",
+      "description": "Implement MongoDB connection with Mongoose, environment configuration with Joi validation, and database health checks.",
+      "status": "completed",
+      "dependencies": [
+        {
+          "taskId": "f050c0f4-0a92-4525-bc32-10e2aba7cde8"
+        }
+      ],
+      "createdAt": "2025-06-30T07:32:56.567Z",
+      "updatedAt": "2025-06-30T11:17:43.298Z",
+      "relatedFiles": [
+        {
+          "path": "backend/src/shared/",
+          "type": "TO_MODIFY",
+          "description": "Shared modules for DB and config"
+        }
+      ],
+      "implementationGuide": "1. Setup Mongoose connection in a dedicated module.\n2. Integrate Joi for environment validation.\n3. Add health check endpoint.\n4. Subtasks:\n   (a) Add/extend Jest tests for all new/changed logic (feature-sliced, strict TypeScript, CI-ready);\n   (b) Update and sync documentation (PRD, TODO, README) for this feature.",
+      "verificationCriteria": "- Mongoose connects using env vars\n- Joi validates all required env vars\n- Health check endpoint works\n- Automated Jest tests and documentation are present and up to date",
+      "analysisResult": "All backend development tasks must include two mandatory subtasks: (1) Add/extend automated Jest tests for all new/changed logic, organized by feature-sliced structure, with strict TypeScript and CI compatibility; (2) Update and sync documentation (PRD in docs/prd/, TODO in docs/todos/, and README.md) for each feature, ensuring traceability, status, and kebab-case naming. Remove global 'Add Automated Tests for Backend Features' and 'Update and Sync Documentation' as standalone tasks; instead, make them required subtasks for every backend development task. All future backend tasks must include these as part of their implementation and verification criteria.",
+      "summary": "All requirements met: Mongoose connects via env vars, Joi validates env, health check endpoint is present, Jest tests pass (workaround script), and documentation is up to date. Feature is CI-ready and type-safe.",
+      "completedAt": "2025-06-30T11:17:43.297Z"
+    },
+    {
+      "id": "2c7bde61-0364-45d1-9f4f-bcab3979249a",
+      "name": "Create Notification System Infrastructure",
+      "description": "Build a centralized notification system with color-coded responses (red=error, orange=warning, green=success) that can be used across all features for consistent user feedback.",
+      "status": "pending",
+      "dependencies": [
+        {
+          "taskId": "f050c0f4-0a92-4525-bc32-10e2aba7cde8"
+        }
+      ],
+      "createdAt": "2025-06-30T07:32:56.567Z",
+      "updatedAt": "2025-06-30T10:21:57.967Z",
+      "relatedFiles": [
+        {
+          "path": "backend/src/shared/",
+          "type": "TO_MODIFY",
+          "description": "Notification system code"
+        }
+      ],
+      "implementationGuide": "1. Design notification service and response format. 2. Integrate with backend features. 3. Subtasks: (a) Add/extend Jest tests for all new/changed logic (feature-sliced, strict TypeScript, CI-ready); (b) Update and sync documentation (PRD, TODO, README) for this feature.",
+      "verificationCriteria": "- Notification system is reusable and color-coded\n- Integrated with features\n- Automated Jest tests and documentation are present and up to date",
+      "analysisResult": "All backend development tasks must include two mandatory subtasks: (1) Add/extend automated Jest tests for all new/changed logic, organized by feature-sliced structure, with strict TypeScript and CI compatibility; (2) Update and sync documentation (PRD in docs/prd/, TODO in docs/todos/, and README.md) for each feature, ensuring traceability, status, and kebab-case naming. Remove global 'Add Automated Tests for Backend Features' and 'Update and Sync Documentation' as standalone tasks; instead, make them required subtasks for every backend development task. All future backend tasks must include these as part of their implementation and verification criteria."
+    },
+    {
+      "id": "32cfd9a3-d14f-4058-8297-22015d9a0e68",
+      "name": "Implement User Schema and Database Model",
+      "description": "Create the User schema with Mongoose, including validation, indexes, and password hashing. Implement user roles enum and address subdocuments.",
+      "status": "pending",
+      "dependencies": [
+        {
+          "taskId": "ce8f1629-d9cd-4e01-b9ce-08a0759afe86"
+        }
+      ],
+      "createdAt": "2025-06-30T07:32:56.567Z",
+      "updatedAt": "2025-06-30T10:22:19.596Z",
+      "relatedFiles": [
+        {
+          "path": "backend/src/features/user/",
+          "type": "TO_MODIFY",
+          "description": "User feature code and tests"
+        }
+      ],
+      "implementationGuide": "1. Design User schema and roles enum. 2. Add validation and indexes. 3. Implement password hashing. 4. Subtasks: (a) Add/extend Jest tests for all new/changed logic (feature-sliced, strict TypeScript, CI-ready); (b) Update and sync documentation (PRD, TODO, README) for this feature.",
+      "verificationCriteria": "- User schema with validation and indexes\n- Password hashing implemented\n- Roles enum present\n- Automated Jest tests and documentation are present and up to date",
+      "analysisResult": "All backend development tasks must include two mandatory subtasks: (1) Add/extend automated Jest tests for all new/changed logic, organized by feature-sliced structure, with strict TypeScript and CI compatibility; (2) Update and sync documentation (PRD in docs/prd/, TODO in docs/todos/, and README.md) for each feature, ensuring traceability, status, and kebab-case naming. Remove global 'Add Automated Tests for Backend Features' and 'Update and Sync Documentation' as standalone tasks; instead, make them required subtasks for every backend development task. All future backend tasks must include these as part of their implementation and verification criteria."
+    },
+    {
+      "id": "9590eb50-5836-45e0-bab8-f71f50410d2c",
+      "name": "Create JWT Authentication Service and Strategy",
+      "description": "Implement JWT service with access/refresh tokens, Passport JWT strategy, and token validation. Include notification integration for auth events.",
+      "status": "pending",
+      "dependencies": [
+        {
+          "taskId": "32cfd9a3-d14f-4058-8297-22015d9a0e68"
+        },
+        {
+          "taskId": "2c7bde61-0364-45d1-9f4f-bcab3979249a"
+        }
+      ],
+      "createdAt": "2025-06-30T07:32:56.567Z",
+      "updatedAt": "2025-06-30T10:22:19.596Z",
+      "relatedFiles": [
+        {
+          "path": "backend/src/features/auth/",
+          "type": "TO_MODIFY",
+          "description": "Auth feature code and tests"
+        }
+      ],
+      "implementationGuide": "1. Implement JWT service and Passport strategy. 2. Add token validation. 3. Integrate notifications. 4. Subtasks: (a) Add/extend Jest tests for all new/changed logic (feature-sliced, strict TypeScript, CI-ready); (b) Update and sync documentation (PRD, TODO, README) for this feature.",
+      "verificationCriteria": "- JWT service and strategy implemented\n- Token validation present\n- Notifications integrated\n- Automated Jest tests and documentation are present and up to date",
+      "analysisResult": "All backend development tasks must include two mandatory subtasks: (1) Add/extend automated Jest tests for all new/changed logic, organized by feature-sliced structure, with strict TypeScript and CI compatibility; (2) Update and sync documentation (PRD in docs/prd/, TODO in docs/todos/, and README.md) for each feature, ensuring traceability, status, and kebab-case naming. Remove global 'Add Automated Tests for Backend Features' and 'Update and Sync Documentation' as standalone tasks; instead, make them required subtasks for every backend development task. All future backend tasks must include these as part of their implementation and verification criteria."
+    },
+    {
+      "id": "4948d22d-cbaf-4c9e-99b7-ec82b11f3f60",
+      "name": "Implement Auth Guards and RBAC System",
+      "description": "Create JWT auth guard, roles guard, and RBAC decorators for protecting routes. Include notification responses for unauthorized access.",
+      "status": "pending",
+      "dependencies": [
+        {
+          "taskId": "9590eb50-5836-45e0-bab8-f71f50410d2c"
+        }
+      ],
+      "createdAt": "2025-06-30T07:32:56.567Z",
+      "updatedAt": "2025-06-30T10:22:28.183Z",
+      "relatedFiles": [
+        {
+          "path": "backend/src/features/auth/",
+          "type": "TO_MODIFY",
+          "description": "Auth guards and RBAC code/tests"
+        }
+      ],
+      "implementationGuide": "1. Implement JWT auth guard and roles guard. 2. Add RBAC decorators. 3. Integrate notification responses. 4. Subtasks: (a) Add/extend Jest tests for all new/changed logic (feature-sliced, strict TypeScript, CI-ready); (b) Update and sync documentation (PRD, TODO, README) for this feature.",
+      "verificationCriteria": "- JWT auth guard and roles guard implemented\n- RBAC decorators present\n- Notification responses integrated\n- Automated Jest tests and documentation are present and up to date",
+      "analysisResult": "All backend development tasks must include two mandatory subtasks: (1) Add/extend automated Jest tests for all new/changed logic, organized by feature-sliced structure, with strict TypeScript and CI compatibility; (2) Update and sync documentation (PRD in docs/prd/, TODO in docs/todos/, and README.md) for each feature, ensuring traceability, status, and kebab-case naming. Remove global 'Add Automated Tests for Backend Features' and 'Update and Sync Documentation' as standalone tasks; instead, make them required subtasks for every backend development task. All future backend tasks must include these as part of their implementation and verification criteria."
+    },
+    {
+      "id": "d82e18dc-ef7c-4c7a-b294-552c07bdd8ce",
+      "name": "Create Auth DTOs and Validation",
+      "description": "Implement all authentication DTOs (register, login, reset password) with comprehensive validation and notification integration.",
+      "status": "pending",
+      "dependencies": [
+        {
+          "taskId": "9590eb50-5836-45e0-bab8-f71f50410d2c"
+        }
+      ],
+      "createdAt": "2025-06-30T07:32:56.567Z",
+      "updatedAt": "2025-06-30T10:22:28.183Z",
+      "relatedFiles": [
+        {
+          "path": "backend/src/features/auth/",
+          "type": "TO_MODIFY",
+          "description": "Auth DTOs and validation code/tests"
+        }
+      ],
+      "implementationGuide": "1. Design DTOs for all auth flows. 2. Add validation logic. 3. Integrate notifications. 4. Subtasks: (a) Add/extend Jest tests for all new/changed logic (feature-sliced, strict TypeScript, CI-ready); (b) Update and sync documentation (PRD, TODO, README) for this feature.",
+      "verificationCriteria": "- DTOs for all auth flows implemented\n- Validation logic present\n- Notifications integrated\n- Automated Jest tests and documentation are present and up to date",
+      "analysisResult": "All backend development tasks must include two mandatory subtasks: (1) Add/extend automated Jest tests for all new/changed logic, organized by feature-sliced structure, with strict TypeScript and CI compatibility; (2) Update and sync documentation (PRD in docs/prd/, TODO in docs/todos/, and README.md) for each feature, ensuring traceability, status, and kebab-case naming. Remove global 'Add Automated Tests for Backend Features' and 'Update and Sync Documentation' as standalone tasks; instead, make them required subtasks for every backend development task. All future backend tasks must include these as part of their implementation and verification criteria."
     }
   ]
 }
