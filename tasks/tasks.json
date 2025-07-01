@@ -1269,33 +1269,6 @@
       "analysisResult": "Complete the e-commerce platform with Next.js frontend tasks that connect to the NestJS backend. Implement feature-sliced architecture, notification system integration (red=error, orange=warning, green=success), and comprehensive user interface for all e-commerce features. Frontend tasks should depend on corresponding backend tasks and provide atomic, achievable implementation steps."
     },
     {
-      "id": "24dbeb0a-283a-445a-bf12-599ef6d3dad3",
-      "name": "Frontend Integration: Scaffold and Connect Next.js App",
-      "description": "Scaffold a Next.js 14+ app with TypeScript, pnpm, Tailwind CSS, ESLint, Prettier, and feature-sliced architecture. Set up API client, shared types, and initial integration with backend endpoints. Prepare for authentication, notification, and product catalog UI.",
-      "status": "pending",
-      "dependencies": [
-        {
-          "taskId": "f050c0f4-0a92-4525-bc32-10e2aba7cde8"
-        }
-      ],
-      "createdAt": "2025-06-30T10:08:47.634Z",
-      "updatedAt": "2025-06-30T10:09:43.748Z",
-      "relatedFiles": [
-        {
-          "path": "frontend/",
-          "type": "CREATE",
-          "description": "Next.js app root"
-        },
-        {
-          "path": "backend/src/shared/types/",
-          "type": "REFERENCE",
-          "description": "Shared types for API contracts"
-        }
-      ],
-      "implementationGuide": "- Create frontend/ folder with Next.js 14+ (app router, TypeScript, pnpm)\n- Add Tailwind CSS, ESLint, Prettier\n- Organize code by feature (feature-sliced)\n- Set up API client and shared types\n- Integrate with backend endpoints (auth, products, etc.)\n- Prepare for notification and catalog UI\n- Commit with 'feat:' prefix and update docs",
-      "verificationCriteria": "- Next.js app is scaffolded and runs\n- Feature-sliced structure is present\n- API client and shared types are set up\n- Initial backend integration works (auth/products)\n- Lint, format, and CI pass"
-    },
-    {
       "id": "ce8f1629-d9cd-4e01-b9ce-08a0759afe86",
       "name": "Setup Database Connection and Configuration Module",
       "description": "Implement MongoDB connection with Mongoose, environment configuration with Joi validation, and database health checks.",
@@ -1347,14 +1320,14 @@
       "id": "32cfd9a3-d14f-4058-8297-22015d9a0e68",
       "name": "Implement User Schema and Database Model",
       "description": "Create the User schema with Mongoose, including validation, indexes, and password hashing. Implement user roles enum and address subdocuments.",
-      "status": "pending",
+      "status": "completed",
       "dependencies": [
         {
           "taskId": "ce8f1629-d9cd-4e01-b9ce-08a0759afe86"
         }
       ],
       "createdAt": "2025-06-30T07:32:56.567Z",
-      "updatedAt": "2025-06-30T10:22:19.596Z",
+      "updatedAt": "2025-07-01T08:39:26.136Z",
       "relatedFiles": [
         {
           "path": "backend/src/features/user/",
@@ -1364,7 +1337,9 @@
       ],
       "implementationGuide": "1. Design User schema and roles enum. 2. Add validation and indexes. 3. Implement password hashing. 4. Subtasks: (a) Add/extend Jest tests for all new/changed logic (feature-sliced, strict TypeScript, CI-ready); (b) Update and sync documentation (PRD, TODO, README) for this feature.",
       "verificationCriteria": "- User schema with validation and indexes\n- Password hashing implemented\n- Roles enum present\n- Automated Jest tests and documentation are present and up to date",
-      "analysisResult": "All backend development tasks must include two mandatory subtasks: (1) Add/extend automated Jest tests for all new/changed logic, organized by feature-sliced structure, with strict TypeScript and CI compatibility; (2) Update and sync documentation (PRD in docs/prd/, TODO in docs/todos/, and README.md) for each feature, ensuring traceability, status, and kebab-case naming. Remove global 'Add Automated Tests for Backend Features' and 'Update and Sync Documentation' as standalone tasks; instead, make them required subtasks for every backend development task. All future backend tasks must include these as part of their implementation and verification criteria."
+      "analysisResult": "All backend development tasks must include two mandatory subtasks: (1) Add/extend automated Jest tests for all new/changed logic, organized by feature-sliced structure, with strict TypeScript and CI compatibility; (2) Update and sync documentation (PRD in docs/prd/, TODO in docs/todos/, and README.md) for each feature, ensuring traceability, status, and kebab-case naming. Remove global 'Add Automated Tests for Backend Features' and 'Update and Sync Documentation' as standalone tasks; instead, make them required subtasks for every backend development task. All future backend tasks must include these as part of their implementation and verification criteria.",
+      "summary": "User schema and model fully implemented: all required fields, enums, validation, password hashing, unique email, address subdocument, and status. All tests pass, docs and TODOs are up to date. CI-ready, type-safe, and feature-sliced.",
+      "completedAt": "2025-07-01T08:39:26.136Z"
     },
     {
       "id": "9590eb50-5836-45e0-bab8-f71f50410d2c",
