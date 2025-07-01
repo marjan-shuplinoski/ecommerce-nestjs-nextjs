@@ -96,3 +96,16 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+
+## Features
+
+- Feature-sliced architecture (NestJS, Mongoose, TypeScript)
+- Category schema/model: name, slug (unique, auto-generated), parentCategory (hierarchy), productCount, status, isDeleted
+- Hierarchical support (parentCategory, tree building)
+- Slug auto-generation and unique validation
+- Product count tracking
+- Indexes: name, slug (unique), parentCategory
+- Soft delete (isDeleted, status)
+- Static method for category tree
+- Full Jest test coverage
+- Documentation and TODOs up to date

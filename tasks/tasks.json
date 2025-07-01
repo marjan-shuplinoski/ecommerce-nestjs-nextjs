@@ -79,14 +79,14 @@
       "name": "Create Category Schema and Model",
       "description": "Implement Category schema with hierarchical support, slug generation, and product counting. Include validation and indexing.",
       "notes": "Follow exact schema from README.md. Implement slug generation from name. Support parent-child relationships.",
-      "status": "pending",
+      "status": "in_progress",
       "dependencies": [
         {
           "taskId": "ce8f1629-d9cd-4e01-b9ce-08a0759afe86"
         }
       ],
       "createdAt": "2025-06-30T07:32:56.567Z",
-      "updatedAt": "2025-06-30T07:32:56.567Z",
+      "updatedAt": "2025-07-01T08:41:23.480Z",
       "relatedFiles": [
         {
           "path": "backend/src/features/categories/schemas/category.schema.ts",
