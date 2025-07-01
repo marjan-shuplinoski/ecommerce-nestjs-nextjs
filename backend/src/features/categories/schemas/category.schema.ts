@@ -12,15 +12,13 @@ interface MappedCategory extends CategoryTreeNode {
   collection: 'categories',
 })
 export class Category extends Document {
-  @Prop({ required: true, trim: true, unique: true })
+  @Prop({ required: true, trim: true })
   name!: string;
 
   @Prop({
     required: true,
-    unique: true,
     lowercase: true,
     trim: true,
-    index: true,
   })
   slug!: string;
 
@@ -34,7 +32,6 @@ export class Category extends Document {
     type: MongooseSchema.Types.ObjectId,
     ref: 'Category',
     default: null,
-    index: true,
   })
   parentCategory?: Types.ObjectId | null;
 
@@ -51,7 +48,6 @@ export class Category extends Document {
     type: String,
     enum: CategoryStatus,
     default: CategoryStatus.ACTIVE,
-    index: true,
   })
   status!: CategoryStatus;
 

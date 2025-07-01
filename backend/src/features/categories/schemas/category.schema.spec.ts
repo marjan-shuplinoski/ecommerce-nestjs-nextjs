@@ -60,7 +60,9 @@ describe('Category Schema', () => {
 
   it('should generate unique slug and enforce uniqueness', async () => {
     await categoryModel.create({ name: 'UniqueBooks' });
-    await expect(categoryModel.create({ name: 'UniqueBooks' })).rejects.toThrow();
+    await expect(categoryModel.create({ name: 'UniqueBooks' })).rejects.toMatchObject({
+      code: 11000,
+    });
   });
 
   it('should support hierarchical categories', async () => {
