@@ -42,6 +42,20 @@ class BillingAddress {
   country!: string;
 }
 
+@Schema({ _id: false })
+class OrderHistory {
+  @Prop({ required: true })
+  event!: string;
+  @Prop({ required: true })
+  status!: string;
+  @Prop({ required: true })
+  paymentStatus!: string;
+  @Prop({ required: true, default: Date.now })
+  timestamp!: Date;
+  @Prop({ type: Types.ObjectId, ref: 'User', required: true })
+  user!: Types.ObjectId;
+}
+
 export type OrderDocument = Order & Document;
 
 @Schema({ timestamps: true, collection: 'orders' })
@@ -93,6 +107,9 @@ export class Order extends Document {
 
   @Prop()
   notes?: string;
+
+  @Prop({ type: [OrderHistory], default: [] })
+  history!: OrderHistory[];
 }
 
 export const OrderSchema = SchemaFactory.createForClass(Order);
