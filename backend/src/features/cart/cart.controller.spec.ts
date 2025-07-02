@@ -2,6 +2,9 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { CartController } from './cart.controller';
 import { CartService } from './cart.service';
 import { Types } from 'mongoose';
+import { AddToCartDto } from './dto/add-to-cart.dto';
+import { UpdateCartDto } from './dto/update-cart.dto';
+import { NotificationService } from '../../shared/notification';
 
 describe('CartController', () => {
   let controller: CartController;
@@ -10,21 +13,22 @@ describe('CartController', () => {
   const userId = new Types.ObjectId().toString();
   const productId = new Types.ObjectId().toString();
   const cartMock = { _id: cartId, userId, items: [], total: 0, isGuest: false };
+  const notificationMock = { type: 'success', message: 'ok' };
 
   const serviceMock = {
     createCart: jest.fn().mockResolvedValue(cartMock),
     getCartById: jest.fn().mockResolvedValue(cartMock),
-    addItem: jest.fn().mockResolvedValue(cartMock),
-    updateItem: jest.fn().mockResolvedValue(cartMock),
-    removeItem: jest.fn().mockResolvedValue(cartMock),
-    clearCart: jest.fn().mockResolvedValue(undefined),
+    addItem: jest.fn().mockResolvedValue({ cart: cartMock, notification: notificationMock }),
+    updateItem: jest.fn().mockResolvedValue({ cart: cartMock, notification: notificationMock }),
+    removeItem: jest.fn().mockResolvedValue({ cart: cartMock, notification: notificationMock }),
+    clearCart: jest.fn().mockResolvedValue({ cart: cartMock, notification: notificationMock }),
     recalculateTotal: jest.fn().mockResolvedValue(cartMock),
   };
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [CartController],
-      providers: [{ provide: CartService, useValue: serviceMock }],
+      providers: [{ provide: CartService, useValue: serviceMock }, NotificationService],
     }).compile();
     controller = module.get<CartController>(CartController);
   });
@@ -46,31 +50,35 @@ describe('CartController', () => {
   });
 
   it('should add an item', async () => {
-    const item = {
-      productId: new Types.ObjectId(productId),
-      quantity: 2,
-      price: 10,
-    };
-    const result = await controller.addItem(cartId, productId, 2, 10);
-    expect(serviceMock.addItem).toHaveBeenCalledWith(cartId, expect.objectContaining(item));
-    expect(result).toEqual(cartMock);
+    const dto: AddToCartDto = { productId: productId.toString(), quantity: 2, price: 10 };
+    const result = await controller.addItem(cartId, dto);
+    expect(serviceMock.addItem).toHaveBeenCalledWith(
+      cartId,
+      expect.objectContaining({
+        quantity: 2,
+        price: 10,
+      }) as Partial<AddToCartDto>,
+    );
+    expect(result).toEqual({ cart: cartMock, notification: notificationMock });
   });
 
   it('should update an item', async () => {
-    const item = {
-      productId: new Types.ObjectId(productId),
-      quantity: 3,
-      price: 15,
-    };
-    const result = await controller.updateItem(cartId, productId, 3, 15);
-    expect(serviceMock.updateItem).toHaveBeenCalledWith(cartId, expect.objectContaining(item));
-    expect(result).toEqual(cartMock);
+    const dto: UpdateCartDto = { productId: productId.toString(), quantity: 3, price: 15 };
+    const result = await controller.updateItem(cartId, dto);
+    expect(serviceMock.updateItem).toHaveBeenCalledWith(
+      cartId,
+      expect.objectContaining({
+        quantity: 3,
+        price: 15,
+      }) as Partial<UpdateCartDto>,
+    );
+    expect(result).toEqual({ cart: cartMock, notification: notificationMock });
   });
 
   it('should remove an item', async () => {
     const result = await controller.removeItem(cartId, productId);
     expect(serviceMock.removeItem).toHaveBeenCalledWith(cartId, expect.any(Types.ObjectId));
-    expect(result).toEqual(cartMock);
+    expect(result).toEqual({ cart: cartMock, notification: notificationMock });
   });
 
   it('should clear the cart', async () => {

@@ -8,6 +8,7 @@ import { Cart, CartSchema } from './schemas/cart.schema';
 import { CartItem, CartItemSchema } from './schemas/cart-item.schema';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
+import { NotificationService } from '../../shared/notification';
 
 describe('CartController (integration)', () => {
   let app: INestApplication;
@@ -27,7 +28,7 @@ describe('CartController (integration)', () => {
         ]),
       ],
       controllers: [CartController],
-      providers: [CartService],
+      providers: [CartService, NotificationService],
     }).compile();
     app = moduleFixture.createNestApplication();
     app.useGlobalPipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }));
@@ -56,11 +57,10 @@ describe('CartController (integration)', () => {
       .patch(`/cart/${cartId}/add-item`)
       .send({ productId, quantity: 2, price: 10 });
     expect(res.status).toBe(200);
-    type CartItemResponse = { productId: string; quantity: number; price: number };
-    type CartResponse = { items: CartItemResponse[]; total: number };
-    const body = res.body as CartResponse;
-    expect(body.items.length).toBe(1);
-    expect(body.total).toBe(20);
+    const body = res.body as { cart: { items: any[]; total: number }; notification: any };
+    expect(body.cart.items.length).toBe(1);
+    expect(body.cart.total).toBe(20);
+    expect(body.notification).toBeDefined();
   });
 
   it('PATCH /api/cart/:id/update-item - update item', async () => {
@@ -68,12 +68,14 @@ describe('CartController (integration)', () => {
       .patch(`/cart/${cartId}/update-item`)
       .send({ productId, quantity: 3, price: 15 });
     expect(res.status).toBe(200);
-    type CartItemResponse = { productId: string; quantity: number; price: number };
-    type CartResponse = { items: CartItemResponse[]; total: number };
-    const body = res.body as CartResponse;
-    expect(body.items[0].quantity).toBe(3);
-    expect(body.items[0].price).toBe(15);
-    expect(body.total).toBe(45);
+    const body = res.body as {
+      cart: { items: { quantity: number; price: number }[]; total: number };
+      notification: any;
+    };
+    expect(body.cart.items[0]?.quantity).toBe(3);
+    expect(body.cart.items[0]?.price).toBe(15);
+    expect(body.cart.total).toBe(45);
+    expect(body.notification).toBeDefined();
   });
 
   it('PATCH /api/cart/:id/remove-item - remove item', async () => {
@@ -81,9 +83,10 @@ describe('CartController (integration)', () => {
       .patch(`/cart/${cartId}/remove-item`)
       .send({ productId });
     expect(res.status).toBe(200);
-    const body = res.body as { items: any[]; total: number };
-    expect(body.items.length).toBe(0);
-    expect(body.total).toBe(0);
+    const body = res.body as { cart: { items: any[]; total: number }; notification: any };
+    expect(body.cart.items.length).toBe(0);
+    expect(body.cart.total).toBe(0);
+    expect(body.notification).toBeDefined();
   });
 
   it('PATCH /api/cart/:id/clear - clear cart', async () => {
@@ -95,6 +98,7 @@ describe('CartController (integration)', () => {
       .patch(`/cart/${cartId}/clear`)
       .send();
     expect(res.status).toBe(204);
+    expect(res.body).toEqual({});
   });
 
   it('PATCH /api/cart/:id/recalculate - recalculate total', async () => {

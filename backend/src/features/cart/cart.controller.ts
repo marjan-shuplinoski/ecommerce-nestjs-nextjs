@@ -1,6 +1,19 @@
-import { Controller, Get, Post, Patch, Param, Body, HttpCode, HttpStatus } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Patch,
+  Param,
+  Body,
+  HttpCode,
+  HttpStatus,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { Types } from 'mongoose';
 import { CartService } from './cart.service';
+import { AddToCartDto } from './dto/add-to-cart.dto';
+import { UpdateCartDto } from './dto/update-cart.dto';
 
 @Controller('cart')
 export class CartController {
@@ -17,30 +30,22 @@ export class CartController {
   }
 
   @Patch(':id/add-item')
-  async addItem(
-    @Param('id') id: string,
-    @Body('productId') productId: string,
-    @Body('quantity') quantity: number,
-    @Body('price') price: number,
-  ) {
+  @UsePipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
+  async addItem(@Param('id') id: string, @Body() dto: AddToCartDto) {
     return this.cartService.addItem(id, {
-      productId: new Types.ObjectId(productId),
-      quantity,
-      price,
+      productId: new Types.ObjectId(dto.productId),
+      quantity: dto.quantity,
+      price: dto.price,
     });
   }
 
   @Patch(':id/update-item')
-  async updateItem(
-    @Param('id') id: string,
-    @Body('productId') productId: string,
-    @Body('quantity') quantity: number,
-    @Body('price') price: number,
-  ) {
+  @UsePipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
+  async updateItem(@Param('id') id: string, @Body() dto: UpdateCartDto) {
     return this.cartService.updateItem(id, {
-      productId: new Types.ObjectId(productId),
-      quantity,
-      price,
+      productId: new Types.ObjectId(dto.productId),
+      quantity: dto.quantity,
+      price: dto.price,
     });
   }
 

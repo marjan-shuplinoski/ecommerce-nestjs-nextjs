@@ -3,6 +3,7 @@ import { getModelToken } from '@nestjs/mongoose';
 import { Types } from 'mongoose';
 import { CartService } from './cart.service';
 import { Cart } from './schemas/cart.schema';
+import { NotificationService } from '../../shared/notification';
 
 type MockCart = {
   _id: Types.ObjectId;
@@ -43,8 +44,17 @@ describe('CartService', () => {
     cartModel = MockCartModel;
     cartModel.findById = jest.fn().mockResolvedValue({ ...mockCart, save: jest.fn() });
     cartModel.create = jest.fn().mockResolvedValue(mockCart);
+    const notificationServiceMock = {
+      notifySuccess: jest.fn().mockReturnValue({ type: 'success', message: 'ok' }),
+      notifyWarning: jest.fn().mockReturnValue({ type: 'warning', message: 'warn' }),
+      notifyError: jest.fn().mockReturnValue({ type: 'error', message: 'err' }),
+    };
     const module: TestingModule = await Test.createTestingModule({
-      providers: [CartService, { provide: getModelToken(Cart.name), useValue: cartModel }],
+      providers: [
+        CartService,
+        { provide: getModelToken(Cart.name), useValue: cartModel },
+        { provide: NotificationService, useValue: notificationServiceMock },
+      ],
     }).compile();
     service = module.get<CartService>(CartService);
   });
@@ -74,9 +84,10 @@ describe('CartService', () => {
       items: [],
       save: jest.fn().mockResolvedValue(cartWithItem),
     });
-    const cart = await service.addItem(mockCart._id.toString(), item);
+    const { cart, notification } = await service.addItem(mockCart._id.toString(), item);
     expect(cart.items.length).toBeGreaterThan(0);
     expect(cart.total).toBe(item.price * item.quantity);
+    expect(notification).toBeDefined();
   });
 
   it('should remove an item from the cart', async () => {
@@ -91,9 +102,10 @@ describe('CartService', () => {
       ...cartWithItem,
       save: jest.fn().mockResolvedValue({ ...mockCart, items: [], total: 0 }),
     });
-    const cart = await service.removeItem(mockCart._id.toString(), productId);
+    const { cart, notification } = await service.removeItem(mockCart._id.toString(), productId);
     expect(cart.items.length).toBe(0);
     expect(cart.total).toBe(0);
+    expect(notification).toBeDefined();
   });
 
   it('should update an item in the cart', async () => {
@@ -110,10 +122,11 @@ describe('CartService', () => {
       items: [item],
       save: jest.fn().mockResolvedValue({ ...mockCart, items: [updatedItem], total: 21 }),
     });
-    const cart = await service.updateItem(mockCart._id.toString(), updatedItem);
+    const { cart, notification } = await service.updateItem(mockCart._id.toString(), updatedItem);
     expect(cart.items[0].quantity).toBe(3);
     expect(cart.items[0].price).toBe(7);
     expect(cart.total).toBe(21);
+    expect(notification).toBeDefined();
   });
 
   it('should clear the cart', async () => {
@@ -127,9 +140,10 @@ describe('CartService', () => {
       ...cartWithItems,
       save: jest.fn().mockResolvedValue({ ...mockCart, items: [], total: 0 }),
     });
-    const cart = await service.clearCart(mockCart._id.toString());
+    const { cart, notification } = await service.clearCart(mockCart._id.toString());
     expect(cart.items.length).toBe(0);
     expect(cart.total).toBe(0);
+    expect(notification).toBeDefined();
   });
 
   it('should recalculate total', async () => {
@@ -149,5 +163,19 @@ describe('CartService', () => {
     });
     const cart = await service.recalculateTotal(mockCart._id.toString());
     expect(cart.total).toBe(25);
+  });
+
+  it('should handle error when cart not found', async () => {
+    cartModel.findById = jest.fn().mockResolvedValue(null);
+    await expect(service.getCartById('invalid')).rejects.toThrow('Cart not found');
+  });
+
+  it('should handle error when item not found in update', async () => {
+    const productId = new Types.ObjectId();
+    const item = { productId, quantity: 1, price: 5 };
+    cartModel.findById = jest.fn().mockResolvedValue({ ...mockCart, items: [], save: jest.fn() });
+    const result = await service.updateItem(mockCart._id.toString(), item);
+    expect(result.notification.type).toBe('error');
+    expect(result.notification.message).toBeDefined();
   });
 });
