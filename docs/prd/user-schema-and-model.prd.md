@@ -3,7 +3,7 @@
 ## Feature: User Schema & Model
 
 ### Status
-- In Progress
+- Done
 
 ### Overview
 Defines the user data model for the ecommerce backend using Mongoose and NestJS. Includes all business/user/account fields, address subdocuments, enums, and validation.

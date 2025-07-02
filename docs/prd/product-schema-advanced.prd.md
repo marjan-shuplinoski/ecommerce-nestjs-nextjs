@@ -17,8 +17,8 @@ A robust, feature-rich Product schema for the Ecommerce backend, supporting SEO,
 - [x] Review subdocument integrated
 - [x] Enums/types used
 - [x] Indexes and virtuals added
-- [ ] Tests created
-- [ ] Documentation created
+- [x] Tests created
+- [x] Documentation created
 
 ## Acceptance Criteria
 - Product schema validates and saves all fields

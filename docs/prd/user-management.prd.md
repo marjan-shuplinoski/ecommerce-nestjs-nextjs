@@ -14,7 +14,7 @@ User registration, authentication, profile management, and RBAC.
 - Role-based access control (RBAC)
 
 ## Tasks
-- [ ] Implement user schema and model
+- [x] Implement user schema and model
 - [ ] Create authentication service and JWT strategy
 - [ ] Add RBAC guards and decorators
 - [ ] Profile management endpoints
