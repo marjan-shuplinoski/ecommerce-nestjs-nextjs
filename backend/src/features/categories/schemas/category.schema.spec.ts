@@ -23,6 +23,7 @@ describe('Category Schema', () => {
       ],
     }).compile();
     categoryModel = module.get(getModelToken(Category.name));
+    await categoryModel.syncIndexes();
   });
 
   afterAll(async () => {
