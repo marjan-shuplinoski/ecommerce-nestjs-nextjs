@@ -6,6 +6,7 @@ import { Order, OrderDocument } from '../schemas/order.schema';
 import { Cart } from '../../cart/schemas/cart.schema';
 import { Product } from '../../products/schemas/product.schema';
 import { OrderStatus } from '../enums/order-status.enum';
+import { PaymentStatus } from '../enums/payment-status.enum';
 import { Types } from 'mongoose';
 import { jest } from '@jest/globals';
 
@@ -94,8 +95,7 @@ describe('OrderService', () => {
 
   it('should call createOrder and return notification', async () => {
     // @ts-expect-error (Jest/TS limitation: hand-rolled mock returns 'any', test-only, safe)
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-    orderModel.create.mockResolvedValue([fullMockOrder] as unknown as any);
+    orderModel.create.mockResolvedValue([fullMockOrder] as unknown as OrderDocument[]);
 
     cartModel.findById.mockReturnValue({
       session: () => ({
@@ -107,38 +107,45 @@ describe('OrderService', () => {
 
     productModel.findById.mockReturnValue({ session: () => ({ stock: 10, name: 'Test Product' }) });
 
-    // @ts-expect-error (Jest/TS limitation: hand-rolled mock returns 'any', test-only, safe)
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-    productModel.updateOne.mockResolvedValue({} as unknown as any);
+    // @ts-expect-error (test mock: updateOne return type is never, safe to ignore for test)
+    productModel.updateOne = jest.fn().mockResolvedValue(undefined);
     const userId = 'userid' as unknown as Types.ObjectId;
-    const dto = { cartId: 'cartid', shippingAddress: validAddress, billingAddress: validAddress };
-    const result = await service.createOrder(userId, dto as any);
+    const dto: Parameters<typeof service.createOrder>[1] = {
+      cartId: 'cartid',
+      shippingAddress: validAddress,
+      billingAddress: validAddress,
+    };
+    const result = await service.createOrder(userId, dto);
     expect(result.notification).toBeDefined();
   });
 
   it('should throw if cart not found', async () => {
     cartModel.findById.mockReturnValue({ session: () => null });
     const userId = 'userid' as unknown as Types.ObjectId;
-    const dto = { cartId: 'cartid', shippingAddress: validAddress, billingAddress: validAddress };
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-    await expect(service.createOrder(userId, dto as any)).rejects.toThrow();
+    const dto: Parameters<typeof service.createOrder>[1] = {
+      cartId: 'cartid',
+      shippingAddress: validAddress,
+      billingAddress: validAddress,
+    };
+    await expect(service.createOrder(userId, dto)).rejects.toThrow();
   });
 
   it('should call updateStatus and return notification', async () => {
     // @ts-expect-error (Jest/TS limitation: hand-rolled mock returns 'any', test-only, safe)
-    orderModel.findById.mockResolvedValue(fullMockOrder as unknown as any);
+    orderModel.findById.mockResolvedValue(fullMockOrder as unknown as OrderDocument);
     const orderId = 'orderid';
-    const dto = { status: OrderStatus.CONFIRMED };
+    const dto: Parameters<typeof service.updateStatus>[1] = { status: OrderStatus.CONFIRMED };
     const userId = 'userid' as unknown as Types.ObjectId;
     const result = await service.updateStatus(orderId, dto, userId, true);
     expect(result.notification).toBeDefined();
   });
 
   it('should call confirmPayment and return notification', async () => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const dto = { paymentStatus: 'paid' as any };
+    const dto: Parameters<typeof service.confirmPayment>[1] = {
+      paymentStatus: PaymentStatus.PAID,
+    };
     // @ts-expect-error (Jest/TS limitation: hand-rolled mock returns 'any', test-only, safe)
-    orderModel.findById.mockResolvedValue(fullMockOrder as unknown as any);
+    orderModel.findById.mockResolvedValue(fullMockOrder as unknown as OrderDocument);
     const orderId = 'orderid';
     const userId = 'userid' as unknown as Types.ObjectId;
     const result = await service.confirmPayment(orderId, dto, userId, true);
@@ -147,7 +154,7 @@ describe('OrderService', () => {
 
   it('should call cancelOrder and return notification', async () => {
     // @ts-expect-error (Jest/TS limitation: hand-rolled mock returns 'any', test-only, safe)
-    orderModel.findById.mockResolvedValue(fullMockOrder as unknown as any);
+    orderModel.findById.mockResolvedValue(fullMockOrder as unknown as OrderDocument);
     const orderId = 'orderid';
     const userId = 'userid' as unknown as Types.ObjectId;
     const result = await service.cancelOrder(orderId, userId, true, 'notes');
@@ -156,7 +163,7 @@ describe('OrderService', () => {
 
   it('should call getOrder and return order', async () => {
     // @ts-expect-error (Jest/TS limitation: hand-rolled mock returns 'any', test-only, safe)
-    orderModel.findById.mockResolvedValue(fullMockOrder as unknown as any);
+    orderModel.findById.mockResolvedValue(fullMockOrder as unknown as OrderDocument);
     const orderId = 'orderid';
     const userId = 'userid' as unknown as Types.ObjectId;
     const result = await service.getOrder(orderId, userId, true);

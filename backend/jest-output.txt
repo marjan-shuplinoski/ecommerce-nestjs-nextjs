@@ -1,0 +1,45 @@
+
+> backend@0.0.1 test /home/marjan/Work/PROJECTS/Ecommerce-Nestjs-Nextjs/backend
+> jest --silent
+
+(node:181269) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+PASS src/features/categories/category.service.spec.ts (5.217 s)
+PASS src/features/categories/category.controller.spec.ts (5.696 s)
+FAIL src/features/categories/category.controller.integration.spec.ts (6.926 s)
+  ● CategoryController (integration) › /categories (POST, GET, PATCH, DELETE)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "TestCat"
+    Received: undefined
+
+      58 |     }
+      59 |     expect(created.data).toBeDefined();
+    > 60 |     expect(created.data.name).toBe(createDto.name);
+         |                               ^
+      61 |     expect(created.data.slug).toBe('testcat');
+      62 |     expect(typeof created.data.isActive).toBe('boolean');
+      63 |     expect(typeof created.data.sortOrder).toBe('number');
+
+      at Object.<anonymous> (src/features/categories/category.controller.integration.spec.ts:60:31)
+
+PASS src/features/user/schemas/user.schema.spec.ts
+PASS src/features/cart/cart.integration.spec.ts
+PASS src/features/orders/__tests__/order.controller.spec.ts
+PASS src/features/products/schemas/product.schema.spec.ts
+PASS src/shared/database/__tests__/database.module.spec.ts
+PASS src/features/orders/__tests__/order.service.spec.ts
+PASS src/features/categories/schemas/category.schema.spec.ts
+PASS src/shared/config/__tests__/config.module.spec.ts
+PASS src/features/cart/cart.controller.spec.ts
+PASS src/shared/health/__tests__/health.controller.spec.ts
+PASS src/shared/__tests__/notification.spec.ts
+PASS src/app.controller.spec.ts
+PASS src/features/cart/cart.service.spec.ts
+
+Test Suites: 1 failed, 15 passed, 16 total
+Tests:       1 failed, 76 passed, 77 total
+Snapshots:   0 total
+Time:        9.857 s, estimated 11 s
+ ELIFECYCLE  Test failed. See above for more details.

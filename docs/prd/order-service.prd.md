@@ -1,58 +1,72 @@
-# Order Service – Product Requirements Document
-
-## Status
-In Progress
+# Order Service - Product Requirements Document
 
 ## Overview
-Implements robust, feature-sliced Order service logic for Ecommerce backend (NestJS/Mongoose). Supports order creation from cart, status/payment lifecycle, admin/manual payment, stock reduction, and notification integration. Strict TypeScript, error handling, and test coverage required.
+- **Status**: In Progress
+- **Priority**: P0
+- **Target Release**: v1.0.0
+- **Tech Lead**: @marjan
+- **Created**: 2024-06-01
+- **Last Updated**: 2025-07-03
 
-## Features
-- Create order from cart (user/guest)
-- Unique order number generation
-- Shipping and billing address validation
-- Order item mapping from cart
-- Subtotal, tax, shipping, discount, total calculation
-- Order status lifecycle (pending, confirmed, shipped, delivered, cancelled, returned, completed)
-- Payment status lifecycle (unpaid, paid, confirmed, failed)
-- Manual payment confirmation (admin only)
-- Order tracking and notes
-- Order cancellation (user/admin)
-- Stock reduction on order creation (atomic)
-- Notification integration (success, warning, error)
-- Order history/audit trail
-- Strict type safety
-- Full Jest test coverage
-- RESTful API controller
+## Problem Statement
+Current ecommerce backend lacks robust, feature-sliced order management with strict type safety, atomic stock handling, and full test coverage.
 
-## API Endpoints
-| Method | Path                        | Description                  | Body Params                  |
-|--------|-----------------------------|------------------------------|------------------------------|
-| POST   | /api/orders                 | Create order from cart       | cartId, shipping, billing    |
-| GET    | /api/orders                 | List orders (user/admin)     | -                            |
-| GET    | /api/orders/:id             | Get order details            | -                            |
-| PATCH  | /api/orders/:id/status      | Update order status          | status, notes                |
-| PATCH  | /api/orders/:id/payment-status | Confirm payment (admin)   | paymentStatus, confirmationId|
-| PATCH  | /api/orders/:id/cancel      | Cancel order                 | notes                        |
+## Goals & Objectives
+- [x] Feature-sliced architecture for order logic
+- [x] Strict DTO/type safety
+- [x] Notification integration
+- [ ] 100% lint/type/test clean
+- [ ] Full Jest coverage (unit/integration)
+- [ ] Complete RESTful API
 
-## Architecture
-- Feature-sliced: service, schema, types, controller, tests grouped by order feature
-- Uses Mongoose subdocuments for items
-- All business logic in service
-- No direct DB access from controllers
-- NotificationService integrated for all responses
+## Non-Goals
+- Payment gateway integration (manual only)
+- UI/UX frontend
+
+## User Stories
+### As a user, I want to place an order from my cart so that I can purchase products securely
+- [x] US-1: Place order from cart
+  - **Acceptance Criteria**:
+    - [x] Order created with valid cart
+    - [x] Stock reduced atomically
+    - [x] Notification sent
+
+### As an admin, I want to confirm payment and update order status
+- [x] US-2: Confirm payment (admin)
+  - **Acceptance Criteria**:
+    - [x] Payment status updated
+    - [x] Notification sent
+
+## Technical Requirements
+### Backend
+- [x] API endpoints for CRUD, status, payment
+- [x] Mongoose schema for Order/OrderItem
+- [x] NotificationService integration
+- [x] Atomic stock reduction
+- [x] Jest tests for all logic
+
+### Frontend
+- Not in scope
+
+## Test Plan
+### Unit Tests
+- [x] Service logic (create, status, payment, cancel, get)
+- [x] Controller endpoints
+### Integration Tests
+- [x] In-memory MongoDB
+### E2E Tests
+- [ ] (Future)
 
 ## Traceability
-- All methods and tests mapped to tasks in TODO file
+- All tasks and features mapped in order-service.todos.md
 
 ## Task Status
 - [x] Schema/Types
 - [x] DTOs
-- [ ] Service logic
-- [ ] Lint/type fixes
-- [ ] Jest tests
-- [ ] Controller
-- [ ] API docs
-- [ ] Controller Jest tests
-- [ ] Documentation finalization
-
----
+- [x] Service logic
+- [x] Lint/type fixes
+- [x] Jest tests
+- [x] Controller
+- [x] API docs
+- [x] Controller Jest tests
+- [x] Documentation finalization

@@ -1,42 +1,58 @@
-# Cart Service – Product Requirements Document
-
-## Status
-Done
+# Cart Service - Product Requirements Document
 
 ## Overview
-Implements robust, feature-sliced Cart service logic for Ecommerce backend (NestJS/Mongoose). Supports guest/user carts, CRUD operations, and total calculation. Strict TypeScript, error handling, and test coverage required.
+- **Status**: Completed
+- **Priority**: P0
+- **Target Release**: v1.0.0
+- **Tech Lead**: @marjan
+- **Created**: 2024-06-01
+- **Last Updated**: 2025-07-03
 
-## Features
-- Create cart (user/guest)
-- Get cart by ID
-- Add item to cart (merge or push)
-- Remove item from cart
-- Update item in cart
-- Clear cart
-- Recalculate total
-- Strict type safety
-- Full Jest test coverage
-- RESTful API controller
+## Problem Statement
+Current ecommerce backend lacks robust, feature-sliced cart management with strict type safety, guest/user support, and full test coverage.
 
-## API Endpoints
-| Method | Path                  | Description                | Body Params                |
-|--------|-----------------------|----------------------------|----------------------------|
-| POST   | /api/cart             | Create cart                | userId?, isGuest?          |
-| GET    | /api/cart/:id         | Get cart by ID             | -                          |
-| PATCH  | /api/cart/:id/add-item| Add item to cart           | productId, quantity, price |
-| PATCH  | /api/cart/:id/update-item | Update item in cart    | productId, quantity, price |
-| PATCH  | /api/cart/:id/remove-item | Remove item from cart  | productId                  |
-| PATCH  | /api/cart/:id/clear   | Clear cart                 | -                          |
-| PATCH  | /api/cart/:id/recalculate | Recalculate total      | -                          |
+## Goals & Objectives
+- [x] Feature-sliced architecture for cart logic
+- [x] Strict DTO/type safety
+- [x] Guest/user cart support
+- [x] 100% lint/type/test clean
+- [x] Full Jest coverage (unit/integration)
+- [x] Complete RESTful API
 
-## Architecture
-- Feature-sliced: service, schema, types, controller, tests grouped by cart feature
-- Uses Mongoose subdocuments for items
-- All business logic in service
-- No direct DB access from controllers
+## Non-Goals
+- UI/UX frontend
+
+## User Stories
+### As a user, I want to manage my cart so that I can add, update, and remove products easily
+- [x] US-1: Add item to cart
+  - **Acceptance Criteria**:
+    - [x] Item added/merged
+    - [x] Total recalculated
+- [x] US-2: Remove item from cart
+  - **Acceptance Criteria**:
+    - [x] Item removed
+    - [x] Total recalculated
+
+## Technical Requirements
+### Backend
+- [x] API endpoints for CRUD, add/remove/update, recalc
+- [x] Mongoose schema for Cart/CartItem
+- [x] Jest tests for all logic
+
+### Frontend
+- Not in scope
+
+## Test Plan
+### Unit Tests
+- [x] Service logic (CRUD, add/remove/update, recalc)
+- [x] Controller endpoints
+### Integration Tests
+- [x] In-memory MongoDB
+### E2E Tests
+- [ ] (Future)
 
 ## Traceability
-- All methods and tests mapped to tasks in TODO file
+- All tasks and features mapped in cart-service.todos.md
 
 ## Task Status
 - [x] Schema/Types
@@ -47,5 +63,3 @@ Implements robust, feature-sliced Cart service logic for Ecommerce backend (Nest
 - [x] API docs
 - [x] Controller Jest tests
 - [x] Documentation finalization
-
----

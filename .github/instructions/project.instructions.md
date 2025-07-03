@@ -1,8 +1,8 @@
 # project.instructions.md
 
-## GitHub Copilot & Contributor Instructions
+## Contributor & Copilot Project Instructions
 
-Follow these rules and standards for all code, documentation, and workflow in this project. These instructions are mandatory for all contributors and Copilot suggestions.
+All contributors and Copilot must strictly follow these rules, which are based on the official project templates, development workflow, and testing guide. These instructions are mandatory for all code, documentation, and workflow in this project.
 
 ---
 
@@ -21,9 +21,11 @@ Follow these rules and standards for all code, documentation, and workflow in th
 - Remove unused imports, variables, and dead code automatically.
 - All code must be clean, readable, and self-explanatory.
 
-### 4. Code Quality
-- All new features, endpoints, and architecture decisions must be documented in `/docs/` using kebab-case markdown files.
-- PRDs go in `docs/prd/`, TODOs in `docs/todos/`.
+### 4. Documentation & PRD/TODO Management
+- All features/modules must have a PRD in `docs/prd/` and a matching TODO in `docs/todos/`.
+- PRDs must follow `docs/templates/prd_template.md` and include: overview, problem statement, goals, user stories, technical requirements, test plan, traceability, and task status.
+- TODOs must follow `docs/templates/todo_template.md` and include: status, overview, description, backend/frontend tasks, dependencies, testing requirements, and documentation.
+- All tasks and features must be traceable between PRD and TODO.
 - Keep README.md and docs in sync with code changes.
 
 ### 5. Security & Best Practices
@@ -37,11 +39,29 @@ Follow these rules and standards for all code, documentation, and workflow in th
 - All PRs must update PRD/TODOs and keep documentation current.
 - Run lint and format before every commit.
 
-### 7. UI/UX & Accessibility
+### 7. Testing & Validation
+- Always include a test per function, component, or endpoint.
+- Follow the structure and naming in `docs/testing_guide.md`:
+  - Unit tests: `*.spec.ts` (e.g., `user.service.spec.ts`)
+  - Integration tests: `[module].integration.spec.ts`
+  - E2E tests: `[feature].e2e-spec.ts`
+- Place tests in `backend/test/unit/`, `backend/test/integration/`, and `backend/test/e2e/` as appropriate.
+- Use Jest and follow the AAA pattern (Arrange, Act, Assert).
+- Aim for 80%+ test coverage.
+- All tests must be isolated, predictable, and reproducible.
+
+### 8. Code Review Checklist
+- [ ] Documentation exists and is up to date (PRD, TODO, README)
+- [ ] Tests are written and passing (unit, integration, E2E)
+- [ ] Code follows project standards and templates
+- [ ] Error handling is implemented and secure
+- [ ] Performance considerations are addressed
+
+### 9. UI/UX & Accessibility
 - All UI must be accessible and mobile-friendly.
 - Follow accessibility best practices for all components.
 
-### 9. CI/CD & DevOps
+### 10. CI/CD & DevOps
 - All scripts must be CI-friendly and reproducible.
 - Docker support is required for local and cloud deployment.
 
