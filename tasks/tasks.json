@@ -1363,7 +1363,7 @@
       "id": "9590eb50-5836-45e0-bab8-f71f50410d2c",
       "name": "Create JWT Authentication Service and Strategy",
       "description": "Implement JWT service with access/refresh tokens, Passport JWT strategy, and token validation. Include notification integration for auth events.",
-      "status": "pending",
+      "status": "completed",
       "dependencies": [
         {
           "taskId": "32cfd9a3-d14f-4058-8297-22015d9a0e68"
@@ -1373,7 +1373,7 @@
         }
       ],
       "createdAt": "2025-06-30T07:32:56.567Z",
-      "updatedAt": "2025-06-30T10:22:19.596Z",
+      "updatedAt": "2025-07-04T05:27:12.120Z",
       "relatedFiles": [
         {
           "path": "backend/src/features/auth/",
@@ -1383,7 +1383,9 @@
       ],
       "implementationGuide": "1. Implement JWT service and Passport strategy. 2. Add token validation. 3. Integrate notifications. 4. Subtasks: (a) Add/extend Jest tests for all new/changed logic (feature-sliced, strict TypeScript, CI-ready); (b) Update and sync documentation (PRD, TODO, README) for this feature.",
       "verificationCriteria": "- JWT service and strategy implemented\n- Token validation present\n- Notifications integrated\n- Automated Jest tests and documentation are present and up to date",
-      "analysisResult": "All backend development tasks must include two mandatory subtasks: (1) Add/extend automated Jest tests for all new/changed logic, organized by feature-sliced structure, with strict TypeScript and CI compatibility; (2) Update and sync documentation (PRD in docs/prd/, TODO in docs/todos/, and README.md) for each feature, ensuring traceability, status, and kebab-case naming. Remove global 'Add Automated Tests for Backend Features' and 'Update and Sync Documentation' as standalone tasks; instead, make them required subtasks for every backend development task. All future backend tasks must include these as part of their implementation and verification criteria."
+      "analysisResult": "All backend development tasks must include two mandatory subtasks: (1) Add/extend automated Jest tests for all new/changed logic, organized by feature-sliced structure, with strict TypeScript and CI compatibility; (2) Update and sync documentation (PRD in docs/prd/, TODO in docs/todos/, and README.md) for each feature, ensuring traceability, status, and kebab-case naming. Remove global 'Add Automated Tests for Backend Features' and 'Update and Sync Documentation' as standalone tasks; instead, make them required subtasks for every backend development task. All future backend tasks must include these as part of their implementation and verification criteria.",
+      "summary": "All requirements are met: JWT service and Passport strategies are implemented with strict TypeScript, access/refresh tokens, token validation, and notification integration. Automated Jest tests and documentation (PRD, TODO, README) are present, up to date, and CI-ready. No lint or type errors remain.",
+      "completedAt": "2025-07-04T05:27:12.119Z"
     },
     {
       "id": "4948d22d-cbaf-4c9e-99b7-ec82b11f3f60",

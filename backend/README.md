@@ -109,3 +109,35 @@ Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
 - Static method for category tree
 - Full Jest test coverage
 - Documentation and TODOs up to date
+
+## JWT Authentication Service and Strategy
+
+This project implements robust JWT authentication using NestJS, Passport, and strict TypeScript. Includes:
+- Access and refresh tokens
+- Passport JWT strategies (access, refresh)
+- JWT guards
+- Notification integration for all auth events
+- Feature-sliced architecture
+- Full Jest unit/integration test coverage
+
+### Usage
+- Import `AuthModule` from `src/features/auth/` in your feature modules.
+- Use `JwtAuthGuard` and `RefreshTokenGuard` to protect routes.
+- Inject `JwtService` for token operations.
+
+### Environment Variables
+- `JWT_ACCESS_SECRET` (required)
+- `JWT_REFRESH_SECRET` (required)
+
+### Tests
+```bash
+pnpm run test src/features/auth/
+```
+
+### Documentation
+- See `/docs/prd/jwt-authentication-service-and-strategy.prd.md`
+- See `/docs/todos/jwt-authentication-service-and-strategy.todos.md`
+
+### CI/CD
+- All code and tests are CI-ready and linted.
+- Uses pnpm, strict TypeScript, and project standards.
