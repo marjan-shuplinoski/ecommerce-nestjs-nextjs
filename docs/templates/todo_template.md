@@ -11,6 +11,9 @@
 ## Description
 [Brief description of what needs to be done]
 
+## Completed
+- [x] Completed Task 1
+
 ## Tasks
 ### Backend
 - [ ] Task 1

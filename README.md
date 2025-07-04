@@ -3,8 +3,16 @@
 A modern, scalable e-commerce platform planned to use NestJS (backend) and Next.js (frontend) with feature-sliced architecture, strict TypeScript, pnpm-only dependency management, and best practices for code quality, documentation, and workflow.
 
 > **⚠️ CURRENT STATUS: PROJECT PLANNING PHASE**  
-> This project is currently in the planning and documentation phase. No backend or frontend code has been implemented yet.  
+> This project is currently in the planning and documentation phase.
 > All features described are planned implementations that need to be built from scratch.
+
+## 📚 Project Documentation
+
+This project follows a documentation-driven approach. All development standards, workflows, and guides are located in the `docs/` directory.
+
+- **[Testing Guide](./docs/testing_guide.md)**: Contains all guidelines for writing unit, integration, and E2E tests.
+- **[PRDs (`docs/prd/`)](./docs/prd/)**: Contains all Product Requirements Documents for each feature.
+- **[TODOs (`docs/todos/`)](./docs/todos/)**: Contains task breakdowns for each PRD.
 
 ## 📋 Project Status
 

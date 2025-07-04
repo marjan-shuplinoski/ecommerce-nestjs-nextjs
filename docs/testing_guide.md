@@ -68,10 +68,10 @@ describe('UserService', () => {
 ```bash
 # Run all tests with coverage
 cd backend
-npm test -- --coverage
+pnpm test -- --coverage
 
 # Run specific test file
-npm test -- src/users/user.service.spec.ts
+pnpm test -- src/users/user.service.spec.ts
 ```
 
 ### Coverage Thresholds

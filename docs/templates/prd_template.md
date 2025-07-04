@@ -45,6 +45,13 @@
 - [ ] Test scenario 1
 - [ ] Test scenario 2
 
+## Traceability
+- Link to the corresponding TODO file (e.g., `../todos/feature-name.todos.md`)
+
+## Task Status
+- [ ] Task 1
+- [ ] Task 2
+
 ## Dependencies
 - [ ] Dependency 1
 - [ ] Dependency 2

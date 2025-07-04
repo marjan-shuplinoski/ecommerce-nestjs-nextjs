@@ -1,50 +1,24 @@
-# Development Workflow Requirements
+# Development Workflow
 
-## Documentation Requirements
+This document outlines the core development workflow for the project, ensuring consistency and quality. All contributors must adhere to these guidelines.
 
-### PRD (Product Requirements Document)
-- **Location**: `docs/prd/`
-- **Requirements**:
-  - Each feature must have a corresponding PRD document
-  - Follow the template in `docs/templates/prd_template.md`
-  - Include user stories, acceptance criteria, and technical considerations
+## 1. Feature Development
+All new features must follow a documentation-driven approach:
 
-### TODOs
-- **Location**: `docs/todos/`
-- **Requirements**:
-  - Create a markdown file for each feature/module
-  - Track implementation progress with checkboxes
-  - Include technical debt items and future improvements
+1.  **Create a PRD**: Define the feature in a new file in [`docs/prd/`](./prd/). Use the [`prd_template.md`](./templates/prd_template.md).
+2.  **Create a TODO**: Break down the PRD into actionable tasks in a corresponding file in [`docs/todos/`](./todos/). Use the [`todo_template.md`](./templates/todo_template.md).
+3.  **Implement**: Write the code, following the feature-sliced architecture.
+4.  **Test**: Write tests for the new feature, following the [Testing Guide](./testing_guide.md).
+5.  **Submit a Pull Request**: Ensure the PR updates the PRD and TODO status.
 
-## Testing Requirements
+## 2. Testing
+All code must be accompanied by tests. Refer to the **[Testing Guide](./testing_guide.md)** for detailed instructions on test structure, naming conventions, and best practices.
 
-### Backend Tests
-- **Location**: `backend/test/`
-- **Requirements**:
-  - Write tests using Jest
-  - Follow the AAA pattern (Arrange, Act, Assert)
-  - Test files should be named `*.spec.ts` or `*.test.ts`
-  - Aim for 80%+ test coverage
+## 3. Code Review
+All pull requests require at least one review. The review checklist is as follows:
 
-### Test Categories
-1. **Unit Tests**
-   - Test individual functions and methods
-   - Mock external dependencies
-   - Place in `test/unit/` directory
-
-2. **Integration Tests**
-   - Test service interactions
-   - Test database operations
-   - Place in `test/integration/` directory
-
-3. **E2E Tests**
-   - Test API endpoints
-   - Test complete user flows
-   - Place in `test/e2e/` directory
-
-## Code Review Checklist
-- [ ] Documentation exists and is up to date
-- [ ] Tests are written and passing
-- [ ] Code follows project standards
-- [ ] Error handling is implemented
-- [ ] Performance considerations are addressed
+- [ ] **Documentation**: Is the PRD/TODO updated?
+- [ ] **Tests**: Are there sufficient tests, and are they passing?
+- [ ] **Standards**: Does the code follow the project's architecture and style guides?
+- [ ] **Error Handling**: Are errors handled gracefully and securely?
+- [ ] **Performance**: Are there any obvious performance bottlenecks?
