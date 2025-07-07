@@ -1,0 +1,505 @@
+{
+  "tasks": [
+    {
+      "id": "f050c0f4-0a92-4525-bc32-10e2aba7cde8",
+      "name": "Setup Backend Project Structure and Core Configuration",
+      "description": "Create the basic NestJS project structure with TypeScript, ESLint, Prettier, and pnpm configuration. Setup feature-sliced architecture folders and basic app module.",
+      "notes": "Use pnpm only, never npm/yarn. Enable strict TypeScript mode. Follow project.instructions.md standards.",
+      "status": "completed",
+      "dependencies": [],
+      "createdAt": "2025-06-30T07:32:56.567Z",
+      "updatedAt": "2025-06-30T10:11:06.712Z",
+      "relatedFiles": [
+        {
+          "path": "backend/package.json",
+          "type": "CREATE",
+          "description": "NestJS dependencies with pnpm configuration"
+        },
+        {
+          "path": "backend/tsconfig.json",
+          "type": "CREATE",
+          "description": "Strict TypeScript configuration"
+        },
+        {
+          "path": "backend/eslint.config.mjs",
+          "type": "CREATE",
+          "description": "ESLint configuration"
+        },
+        {
+          "path": "backend/src/app.module.ts",
+          "type": "CREATE",
+          "description": "Root application module"
+        },
+        {
+          "path": "backend/src/main.ts",
+          "type": "CREATE",
+          "description": "Application bootstrap"
+        }
+      ],
+      "implementationGuide": "1. Create backend/ folder\n2. Initialize NestJS project with CLI\n3. Configure pnpm workspace\n4. Setup strict TypeScript config\n5. Configure ESLint + Prettier\n6. Create feature-sliced folder structure (/features, /shared)\n7. Setup basic app.module.ts with imports\n8. Create main.ts with CORS and security headers",
+      "verificationCriteria": "Project builds successfully with pnpm, linting passes, TypeScript strict mode enabled, folder structure matches feature-sliced architecture",
+      "analysisResult": "Build a complete e-commerce platform with NestJS backend and Next.js frontend, implementing a notification system with color-coded responses (red=error, orange=warning, green=success) for all user actions. Backend-first development approach with atomic tasks focusing on feature-sliced architecture, strict TypeScript, and comprehensive testing. Each task should be small, achievable, and include notification integration requirements.",
+      "summary": "Setup Backend Project Structure and Core Configuration is complete: feature-sliced architecture, strict TypeScript, pnpm, ESLint/Prettier, .env, automation, and all dependent subtasks (tests, docs, frontend) are linked and ready. All requirements and standards are met.",
+      "completedAt": "2025-06-30T10:11:06.710Z"
+    },
+    {
+      "id": "c3051935-fe88-4ddc-be4e-980e3693c5e5",
+      "name": "Create Category Schema and Model",
+      "description": "Implement Category schema with hierarchical support, slug generation, and product counting. Include validation and indexing.",
+      "notes": "Follow exact schema from README.md. Implement slug generation from name. Support parent-child relationships.",
+      "status": "completed",
+      "dependencies": [
+        {
+          "taskId": "ce8f1629-d9cd-4e01-b9ce-08a0759afe86"
+        }
+      ],
+      "createdAt": "2025-06-30T07:32:56.567Z",
+      "updatedAt": "2025-07-01T09:08:57.548Z",
+      "relatedFiles": [
+        {
+          "path": "backend/src/features/categories/schemas/category.schema.ts",
+          "type": "CREATE",
+          "description": "Category schema with hierarchical support"
+        },
+        {
+          "path": "backend/src/features/categories/types/category.types.ts",
+          "type": "CREATE",
+          "description": "Category type definitions"
+        }
+      ],
+      "implementationGuide": "1. Create categories/schemas/category.schema.ts\n2. Add hierarchical support with parentCategory\n3. Implement slug auto-generation\n4. Add product count tracking\n5. Create indexes for name, slug, parentCategory\n6. Add validation for unique slugs\n7. Implement category tree methods\n8. Add soft delete functionality",
+      "verificationCriteria": "Category schema validates correctly, hierarchical relationships work, slug generation is automatic, indexes improve query performance",
+      "analysisResult": "Build a complete e-commerce platform with NestJS backend and Next.js frontend, implementing a notification system with color-coded responses (red=error, orange=warning, green=success) for all user actions. Backend-first development approach with atomic tasks focusing on feature-sliced architecture, strict TypeScript, and comprehensive testing. Each task should be small, achievable, and include notification integration requirements.",
+      "summary": "All requirements for the Category schema/model are fully implemented: hierarchical support (parentCategory), slug auto-generation, product counting, validation, and indexing. The schema matches the README.md structure, includes soft delete, and exposes a static buildCategoryTree method. Code is strict TypeScript, lint/type error free, and fully tested. Verification: schema validates, hierarchy and slug logic work, and indexes are present. Task is complete and production-ready.",
+      "completedAt": "2025-07-01T09:08:57.548Z"
+    },
+    {
+      "id": "34c2df37-14cc-4ad7-a6e3-d179809e0ccd",
+      "name": "Implement Category Service and CRUD Operations",
+      "description": "Create category service with CRUD operations, hierarchical queries, and notification integration for all category actions.",
+      "notes": "Integrate notifications: green for successful operations, red for errors (duplicate slug), orange for warnings (category has products).",
+      "status": "completed",
+      "dependencies": [
+        {
+          "taskId": "c3051935-fe88-4ddc-be4e-980e3693c5e5"
+        },
+        {
+          "taskId": "2c7bde61-0364-45d1-9f4f-bcab3979249a"
+        }
+      ],
+      "createdAt": "2025-06-30T07:32:56.567Z",
+      "updatedAt": "2025-07-03T11:49:34.851Z",
+      "relatedFiles": [
+        {
+          "path": "backend/src/features/categories/services/category.service.ts",
+          "type": "CREATE",
+          "description": "Category business logic service"
+        },
+        {
+          "path": "backend/src/features/categories/dto/create-category.dto.ts",
+          "type": "CREATE",
+          "description": "Create category DTO"
+        },
+        {
+          "path": "backend/src/features/categories/dto/update-category.dto.ts",
+          "type": "CREATE",
+          "description": "Update category DTO"
+        }
+      ],
+      "implementationGuide": "1. Create categories/services/category.service.ts\n2. Implement CRUD operations (create, findAll, findOne, update, delete)\n3. Add hierarchical query methods (getChildren, getParents, getTree)\n4. Implement product count updates\n5. Add slug validation and generation\n6. Integrate notification system for all operations\n7. Add bulk operations support\n8. Implement category tree building logic",
+      "verificationCriteria": "All CRUD operations work, hierarchical queries return correct data, notifications provide clear feedback, product counts update automatically",
+      "analysisResult": "Build a complete e-commerce platform with NestJS backend and Next.js frontend, implementing a notification system with color-coded responses (red=error, orange=warning, green=success) for all user actions. Backend-first development approach with atomic tasks focusing on feature-sliced architecture, strict TypeScript, and comprehensive testing. Each task should be small, achievable, and include notification integration requirements.",
+      "summary": "Task completion summary: All CRUD operations, hierarchical queries, slug normalization/validation, product count updates, and notification integration are implemented with strict typing and feature-sliced architecture. All endpoints return the required { data, notification } shape. Full unit and integration test coverage is present, and all lint/type checks pass. Documentation and code are fully aligned with project/global standards.",
+      "completedAt": "2025-07-03T11:49:34.850Z"
+    },
+    {
+      "id": "d4b50a8d-33f0-4c8e-9021-c3cb84ebe590",
+      "name": "Implement Product Schema with Advanced Features",
+      "description": "Create comprehensive Product schema with SEO fields, reviews, attributes, specifications, and proper indexing for search functionality.",
+      "notes": "Follow exact schema from README.md. Add full-text search indexes. Support dynamic attributes and specifications.",
+      "status": "completed",
+      "dependencies": [
+        {
+          "taskId": "c3051935-fe88-4ddc-be4e-980e3693c5e5"
+        }
+      ],
+      "createdAt": "2025-06-30T07:32:56.567Z",
+      "updatedAt": "2025-07-01T09:50:06.132Z",
+      "relatedFiles": [
+        {
+          "path": "backend/src/features/products/schemas/product.schema.ts",
+          "type": "CREATE",
+          "description": "Product schema with advanced features"
+        },
+        {
+          "path": "backend/src/features/products/schemas/review.schema.ts",
+          "type": "CREATE",
+          "description": "Product review subdocument"
+        },
+        {
+          "path": "backend/src/features/products/enums/product-status.enum.ts",
+          "type": "CREATE",
+          "description": "Product status enumeration"
+        },
+        {
+          "path": "backend/src/features/products/types/product.types.ts",
+          "type": "CREATE",
+          "description": "Product type definitions"
+        }
+      ],
+      "implementationGuide": "1. Create products/schemas/product.schema.ts\n2. Implement all fields from README schema\n3. Add text indexes for search (name, description, tags)\n4. Create review subdocument schema\n5. Add attributes and specifications support\n6. Implement SEO fields structure\n7. Add product status enum\n8. Create virtual fields for calculated values",
+      "verificationCriteria": "Product schema validates correctly, search indexes work, review system integrated, SEO fields support metadata, status enum enforces valid states",
+      "analysisResult": "Build a complete e-commerce platform with NestJS backend and Next.js frontend, implementing a notification system with color-coded responses (red=error, orange=warning, green=success) for all user actions. Backend-first development approach with atomic tasks focusing on feature-sliced architecture, strict TypeScript, and comprehensive testing. Each task should be small, achievable, and include notification integration requirements.",
+      "summary": "The Product schema implements all advanced features as required: all fields, enums, types, text search indexes, review subdocument, SEO fields, status enum, and virtuals are present and type-safe. Code is clean, type-checked, linted, and tested. No duplicate model registration or index warnings. Documentation and tests are up to date. Task is fully complete and production-ready.",
+      "completedAt": "2025-07-01T09:50:06.131Z"
+    },
+    {
+      "id": "26b84e19-3e37-46d3-bb80-5c43273db1a4",
+      "name": "Create Cart Schema and Shopping Logic",
+      "description": "Implement Cart schema with item management, total calculations, and guest cart support.",
+      "notes": "Follow exact schema from README.md. Support both authenticated and guest users. Implement automatic total calculations.",
+      "status": "completed",
+      "dependencies": [
+        {
+          "taskId": "d4b50a8d-33f0-4c8e-9021-c3cb84ebe590"
+        }
+      ],
+      "createdAt": "2025-06-30T07:32:56.567Z",
+      "updatedAt": "2025-07-02T08:16:22.757Z",
+      "relatedFiles": [
+        {
+          "path": "backend/src/features/cart/schemas/cart.schema.ts",
+          "type": "CREATE",
+          "description": "Shopping cart schema"
+        },
+        {
+          "path": "backend/src/features/cart/schemas/cart-item.schema.ts",
+          "type": "CREATE",
+          "description": "Cart item subdocument"
+        },
+        {
+          "path": "backend/src/features/cart/types/cart.types.ts",
+          "type": "CREATE",
+          "description": "Cart type definitions"
+        }
+      ],
+      "implementationGuide": "1. Create cart/schemas/cart.schema.ts\n2. Implement cart item subdocument\n3. Add total calculation virtual fields\n4. Support guest cart functionality\n5. Add cart expiration logic\n6. Implement quantity validation\n7. Add price calculation methods\n8. Create cart item validation",
+      "verificationCriteria": "Cart schema validates correctly, total calculations are accurate, guest cart functionality works, item validation prevents invalid quantities",
+      "analysisResult": "Build a complete e-commerce platform with NestJS backend and Next.js frontend, implementing a notification system with color-coded responses (red=error, orange=warning, green=success) for all user actions. Backend-first development approach with atomic tasks focusing on feature-sliced architecture, strict TypeScript, and comprehensive testing. Each task should be small, achievable, and include notification integration requirements.",
+      "summary": "All Cart schema, item management, total calculation, and guest cart features are implemented and fully tested. Validation for item quantity and price is enforced at the service and schema level. All requirements and edge cases are covered by unit and integration tests. Documentation and code are production-ready and compliant with standards.",
+      "completedAt": "2025-07-02T08:16:22.756Z"
+    },
+    {
+      "id": "00f2091b-fada-45b5-86df-b51ca91d287a",
+      "name": "Implement Cart Service with Notification Integration",
+      "description": "Create cart service with add/remove/update operations, cart management, and comprehensive notification responses.",
+      "notes": "Notifications: green for successful cart operations, red for errors (product not found, insufficient stock), orange for warnings (cart expiring).",
+      "status": "completed",
+      "dependencies": [
+        {
+          "taskId": "26b84e19-3e37-46d3-bb80-5c43273db1a4"
+        },
+        {
+          "taskId": "2c7bde61-0364-45d1-9f4f-bcab3979249a"
+        }
+      ],
+      "createdAt": "2025-06-30T07:32:56.567Z",
+      "updatedAt": "2025-07-02T09:45:39.047Z",
+      "relatedFiles": [
+        {
+          "path": "backend/src/features/cart/services/cart.service.ts",
+          "type": "CREATE",
+          "description": "Cart business logic service"
+        },
+        {
+          "path": "backend/src/features/cart/dto/add-to-cart.dto.ts",
+          "type": "CREATE",
+          "description": "Add to cart DTO with validation"
+        },
+        {
+          "path": "backend/src/features/cart/dto/update-cart.dto.ts",
+          "type": "CREATE",
+          "description": "Update cart item DTO"
+        }
+      ],
+      "implementationGuide": "1. Create cart/services/cart.service.ts\n2. Implement addToCart with product validation\n3. Implement removeFromCart with notifications\n4. Implement updateQuantity with stock checking\n5. Add getCart and clearCart methods\n6. Implement cart total recalculation\n7. Add cart expiration cleanup\n8. Integrate notifications for all operations",
+      "verificationCriteria": "All cart operations work correctly, stock validation prevents overselling, notifications provide clear feedback, cart totals calculate accurately",
+      "analysisResult": "Build a complete e-commerce platform with NestJS backend and Next.js frontend, implementing a notification system with color-coded responses (red=error, orange=warning, green=success) for all user actions. Backend-first development approach with atomic tasks focusing on feature-sliced architecture, strict TypeScript, and comprehensive testing. Each task should be small, achievable, and include notification integration requirements.",
+      "summary": "Cart service fully implements add, remove, update, get, clear, and recalculate operations with strict notification integration. All business logic, validation, and notification flows are covered by unit and integration tests. Lint and type checks are 100% clean. All verification criteria are met.",
+      "completedAt": "2025-07-02T09:45:39.046Z"
+    },
+    {
+      "id": "526625ce-4301-4f12-b682-1e39a8e04dc1",
+      "name": "Implement Order Schema with Cash-on-Delivery",
+      "description": "Create Order schema with cash-on-delivery payment system, order status tracking, and admin payment confirmation.",
+      "notes": "Cash-on-delivery only payment system. Admin confirms payment with paymentConfirmationId. No online payment integration.",
+      "status": "completed",
+      "dependencies": [
+        {
+          "taskId": "26b84e19-3e37-46d3-bb80-5c43273db1a4"
+        }
+      ],
+      "createdAt": "2025-06-30T07:32:56.567Z",
+      "updatedAt": "2025-07-02T08:31:40.991Z",
+      "relatedFiles": [
+        {
+          "path": "backend/src/features/orders/schemas/order.schema.ts",
+          "type": "CREATE",
+          "description": "Order schema with cash-on-delivery"
+        },
+        {
+          "path": "backend/src/features/orders/schemas/order-item.schema.ts",
+          "type": "CREATE",
+          "description": "Order item subdocument"
+        },
+        {
+          "path": "backend/src/features/orders/enums/order-status.enum.ts",
+          "type": "CREATE",
+          "description": "Order status enumeration"
+        },
+        {
+          "path": "backend/src/features/orders/enums/payment-status.enum.ts",
+          "type": "CREATE",
+          "description": "Payment status enumeration"
+        }
+      ],
+      "implementationGuide": "1. Create orders/schemas/order.schema.ts\n2. Implement all fields from README schema\n3. Set paymentMethod default to 'cash_on_delivery'\n4. Add paymentConfirmationId for admin confirmation\n5. Create order status enum\n6. Add address subdocuments for shipping/billing\n7. Implement order item subdocument\n8. Add order number generation logic",
+      "verificationCriteria": "Order schema validates correctly, cash-on-delivery is default payment method, order status tracking works, admin payment confirmation system integrated",
+      "analysisResult": "Build a complete e-commerce platform with NestJS backend and Next.js frontend, implementing a notification system with color-coded responses (red=error, orange=warning, green=success) for all user actions. Backend-first development approach with atomic tasks focusing on feature-sliced architecture, strict TypeScript, and comprehensive testing. Each task should be small, achievable, and include notification integration requirements.",
+      "summary": "Order schema is fully implemented per requirements: all fields from README are present, paymentMethod defaults to 'cash_on_delivery', order status and payment status enums are used, admin payment confirmation is supported, address subdocuments are correct, order item subdocument is implemented, and order number generation logic is present. All verification criteria are met.",
+      "completedAt": "2025-07-02T08:31:40.990Z"
+    },
+    {
+      "id": "bbe6eac4-95b0-462a-89a5-bad449227e36",
+      "name": "Create Order Service with Lifecycle Management",
+      "description": "Implement order service with order creation, status updates, payment confirmation, and comprehensive notification integration.",
+      "notes": "Notifications: green for successful orders, red for order failures, orange for status changes requiring attention. Handle stock reduction.",
+      "status": "completed",
+      "dependencies": [
+        {
+          "taskId": "526625ce-4301-4f12-b682-1e39a8e04dc1"
+        },
+        {
+          "taskId": "2c7bde61-0364-45d1-9f4f-bcab3979249a"
+        }
+      ],
+      "createdAt": "2025-06-30T07:32:56.567Z",
+      "updatedAt": "2025-07-02T11:59:26.448Z",
+      "relatedFiles": [
+        {
+          "path": "backend/src/features/orders/services/order.service.ts",
+          "type": "CREATE",
+          "description": "Order lifecycle management service"
+        },
+        {
+          "path": "backend/src/features/orders/dto/create-order.dto.ts",
+          "type": "CREATE",
+          "description": "Create order DTO"
+        },
+        {
+          "path": "backend/src/features/orders/dto/update-order-status.dto.ts",
+          "type": "CREATE",
+          "description": "Order status update DTO"
+        },
+        {
+          "path": "backend/src/features/orders/dto/confirm-payment.dto.ts",
+          "type": "CREATE",
+          "description": "Payment confirmation DTO"
+        }
+      ],
+      "implementationGuide": "1. Create orders/services/order.service.ts\n2. Implement createOrder from cart conversion\n3. Add order status update methods\n4. Implement admin payment confirmation\n5. Add order tracking and history\n6. Create order cancellation logic\n7. Implement stock reduction on order creation\n8. Integrate notifications for all order events",
+      "verificationCriteria": "Order creation works correctly, status updates track lifecycle, payment confirmation system works, stock reduction prevents overselling, notifications provide clear feedback",
+      "analysisResult": "Build a complete e-commerce platform with NestJS backend and Next.js frontend, implementing a notification system with color-coded responses (red=error, orange=warning, green=success) for all user actions. Backend-first development approach with atomic tasks focusing on feature-sliced architecture, strict TypeScript, and comprehensive testing. Each task should be small, achievable, and include notification integration requirements.",
+      "summary": "The Order Service has been successfully implemented with comprehensive lifecycle management. Key features include: 1) Order creation with cart validation and stock management, 2) Transaction support for data consistency, 3) Integration with NotificationService for user feedback, 4) Proper error handling and validation, 5) Clean code structure with TypeScript types. The implementation meets all requirements and follows best practices for NestJS applications.",
+      "completedAt": "2025-07-02T11:59:26.445Z"
+    },
+    {
+      "id": "96fd3f0d-29af-47c6-b5f3-a3cf412a6e65",
+      "name": "Create User Profile Service and Management",
+      "description": "Implement user service with profile management, address handling, and notification integration for user operations.",
+      "notes": "Notifications: green for successful profile updates, red for errors (email already exists), orange for warnings (account deactivated).",
+      "status": "completed",
+      "dependencies": [
+        {
+          "taskId": "32cfd9a3-d14f-4058-8297-22015d9a0e68"
+        },
+        {
+          "taskId": "2c7bde61-0364-45d1-9f4f-bcab3979249a"
+        }
+      ],
+      "createdAt": "2025-06-30T07:32:56.567Z",
+      "updatedAt": "2025-07-07T08:11:44.644Z",
+      "relatedFiles": [
+        {
+          "path": "backend/src/features/users/services/user.service.ts",
+          "type": "CREATE",
+          "description": "User profile management service"
+        },
+        {
+          "path": "backend/src/features/users/dto/update-profile.dto.ts",
+          "type": "CREATE",
+          "description": "Update user profile DTO"
+        },
+        {
+          "path": "backend/src/features/users/dto/add-address.dto.ts",
+          "type": "CREATE",
+          "description": "Add user address DTO"
+        }
+      ],
+      "implementationGuide": "1. Create users/services/user.service.ts\n2. Implement profile CRUD operations\n3. Add address management (add, update, delete, set default)\n4. Implement user status updates\n5. Add user search and filtering for admin\n6. Create password update functionality\n7. Implement user account deactivation\n8. Integrate notifications for all user operations",
+      "verificationCriteria": "User profile operations work correctly, address management functions properly, notifications provide clear feedback, admin can manage users",
+      "analysisResult": "Build a complete e-commerce platform with NestJS backend and Next.js frontend, implementing a notification system with color-coded responses (red=error, orange=warning, green=success) for all user actions. Backend-first development approach with atomic tasks focusing on feature-sliced architecture, strict TypeScript, and comprehensive testing. Each task should be small, achievable, and include notification integration requirements.",
+      "summary": "User Profile Service and Management feature is fully implemented and exceeds requirements. All CRUD operations, address management, admin features, secure password handling, avatar upload, comprehensive test coverage (28 tests passing), strict TypeScript compliance, ESLint compliance, proper error handling, notification integration, and complete documentation are successfully implemented. Ready for production with JWT authentication integration.",
+      "completedAt": "2025-07-07T08:11:44.642Z"
+    },
+    {
+      "id": "41b376b0-b1d6-47f9-bfb4-3351944a474b",
+      "name": "Setup Frontend Project Structure and Configuration",
+      "description": "Create Next.js 14 project with TypeScript, Tailwind CSS, ESLint, Prettier, and feature-sliced architecture. Setup app router and basic configuration.",
+      "notes": "Use pnpm only. Enable strict TypeScript mode. Setup feature-sliced architecture with /app, /features, /shared folders.",
+      "status": "completed",
+      "dependencies": [
+        {
+          "taskId": "f050c0f4-0a92-4525-bc32-10e2aba7cde8"
+        }
+      ],
+      "createdAt": "2025-06-30T08:10:23.440Z",
+      "updatedAt": "2025-07-02T06:46:41.811Z",
+      "relatedFiles": [
+        {
+          "path": "frontend/package.json",
+          "type": "CREATE",
+          "description": "Next.js dependencies with pnpm configuration"
+        },
+        {
+          "path": "frontend/tsconfig.json",
+          "type": "CREATE",
+          "description": "Strict TypeScript configuration"
+        },
+        {
+          "path": "frontend/tailwind.config.ts",
+          "type": "CREATE",
+          "description": "Tailwind CSS configuration"
+        },
+        {
+          "path": "frontend/src/app/layout.tsx",
+          "type": "CREATE",
+          "description": "Root layout component"
+        },
+        {
+          "path": "frontend/next.config.ts",
+          "type": "CREATE",
+          "description": "Next.js configuration"
+        }
+      ],
+      "implementationGuide": "1. Create frontend/ folder\n2. Initialize Next.js 14 project with TypeScript\n3. Configure pnpm workspace\n4. Setup Tailwind CSS with dark mode support\n5. Configure ESLint + Prettier\n6. Create feature-sliced folder structure\n7. Setup app router with layout.tsx\n8. Configure environment variables\n9. Setup API client configuration",
+      "verificationCriteria": "Project builds successfully, Tailwind CSS works, TypeScript strict mode enabled, feature-sliced structure created, app router configured",
+      "analysisResult": "Complete the e-commerce platform with Next.js frontend tasks that connect to the NestJS backend. Implement feature-sliced architecture, notification system integration (red=error, orange=warning, green=success), and comprehensive user interface for all e-commerce features. Frontend tasks should depend on corresponding backend tasks and provide atomic, achievable implementation steps.",
+      "summary": "All verification criteria are met: Next.js 14 project is set up with TypeScript strict mode, Tailwind CSS (including dark mode), ESLint, Prettier, and feature-sliced folders. App router and layout.tsx are present, environment variables and API client are configured, and the project builds and runs successfully. Health check API route is working. Task complete.",
+      "completedAt": "2025-07-02T06:46:41.810Z"
+    },
+    {
+      "id": "ce8f1629-d9cd-4e01-b9ce-08a0759afe86",
+      "name": "Setup Database Connection and Configuration Module",
+      "description": "Implement MongoDB connection with Mongoose, environment configuration with Joi validation, and database health checks.",
+      "status": "completed",
+      "dependencies": [
+        {
+          "taskId": "f050c0f4-0a92-4525-bc32-10e2aba7cde8"
+        }
+      ],
+      "createdAt": "2025-06-30T07:32:56.567Z",
+      "updatedAt": "2025-06-30T11:17:43.298Z",
+      "relatedFiles": [
+        {
+          "path": "backend/src/shared/",
+          "type": "TO_MODIFY",
+          "description": "Shared modules for DB and config"
+        }
+      ],
+      "implementationGuide": "1. Setup Mongoose connection in a dedicated module.\n2. Integrate Joi for environment validation.\n3. Add health check endpoint.\n4. Subtasks:\n   (a) Add/extend Jest tests for all new/changed logic (feature-sliced, strict TypeScript, CI-ready);\n   (b) Update and sync documentation (PRD, TODO, README) for this feature.",
+      "verificationCriteria": "- Mongoose connects using env vars\n- Joi validates all required env vars\n- Health check endpoint works\n- Automated Jest tests and documentation are present and up to date",
+      "analysisResult": "All backend development tasks must include two mandatory subtasks: (1) Add/extend automated Jest tests for all new/changed logic, organized by feature-sliced structure, with strict TypeScript and CI compatibility; (2) Update and sync documentation (PRD in docs/prd/, TODO in docs/todos/, and README.md) for each feature, ensuring traceability, status, and kebab-case naming. Remove global 'Add Automated Tests for Backend Features' and 'Update and Sync Documentation' as standalone tasks; instead, make them required subtasks for every backend development task. All future backend tasks must include these as part of their implementation and verification criteria.",
+      "summary": "All requirements met: Mongoose connects via env vars, Joi validates env, health check endpoint is present, Jest tests pass (workaround script), and documentation is up to date. Feature is CI-ready and type-safe.",
+      "completedAt": "2025-06-30T11:17:43.297Z"
+    },
+    {
+      "id": "2c7bde61-0364-45d1-9f4f-bcab3979249a",
+      "name": "Create Notification System Infrastructure",
+      "description": "Build a centralized notification system with color-coded responses (red=error, orange=warning, green=success) that can be used across all features for consistent user feedback.",
+      "status": "completed",
+      "dependencies": [
+        {
+          "taskId": "f050c0f4-0a92-4525-bc32-10e2aba7cde8"
+        }
+      ],
+      "createdAt": "2025-06-30T07:32:56.567Z",
+      "updatedAt": "2025-07-02T07:40:19.983Z",
+      "relatedFiles": [
+        {
+          "path": "backend/src/shared/",
+          "type": "TO_MODIFY",
+          "description": "Notification system code"
+        }
+      ],
+      "implementationGuide": "1. Design notification service and response format. 2. Integrate with backend features. 3. Subtasks: (a) Add/extend Jest tests for all new/changed logic (feature-sliced, strict TypeScript, CI-ready); (b) Update and sync documentation (PRD, TODO, README) for this feature.",
+      "verificationCriteria": "- Notification system is reusable and color-coded\n- Integrated with features\n- Automated Jest tests and documentation are present and up to date",
+      "analysisResult": "All backend development tasks must include two mandatory subtasks: (1) Add/extend automated Jest tests for all new/changed logic, organized by feature-sliced structure, with strict TypeScript and CI compatibility; (2) Update and sync documentation (PRD in docs/prd/, TODO in docs/todos/, and README.md) for each feature, ensuring traceability, status, and kebab-case naming. Remove global 'Add Automated Tests for Backend Features' and 'Update and Sync Documentation' as standalone tasks; instead, make them required subtasks for every backend development task. All future backend tasks must include these as part of their implementation and verification criteria.",
+      "summary": "Centralized notification system implemented in backend/src/shared/notification.ts with color-coded responses and strict types. Automated Jest tests in backend/src/shared/__tests__/notification.spec.ts verify all notification types. Code is feature-sliced, TypeScript strict, and CI-ready. Task complete.",
+      "completedAt": "2025-07-02T07:40:19.982Z"
+    },
+    {
+      "id": "32cfd9a3-d14f-4058-8297-22015d9a0e68",
+      "name": "Implement User Schema and Database Model",
+      "description": "Create the User schema with Mongoose, including validation, indexes, and password hashing. Implement user roles enum and address subdocuments.",
+      "status": "completed",
+      "dependencies": [
+        {
+          "taskId": "ce8f1629-d9cd-4e01-b9ce-08a0759afe86"
+        }
+      ],
+      "createdAt": "2025-06-30T07:32:56.567Z",
+      "updatedAt": "2025-07-01T08:39:26.136Z",
+      "relatedFiles": [
+        {
+          "path": "backend/src/features/user/",
+          "type": "TO_MODIFY",
+          "description": "User feature code and tests"
+        }
+      ],
+      "implementationGuide": "1. Design User schema and roles enum. 2. Add validation and indexes. 3. Implement password hashing. 4. Subtasks: (a) Add/extend Jest tests for all new/changed logic (feature-sliced, strict TypeScript, CI-ready); (b) Update and sync documentation (PRD, TODO, README) for this feature.",
+      "verificationCriteria": "- User schema with validation and indexes\n- Password hashing implemented\n- Roles enum present\n- Automated Jest tests and documentation are present and up to date",
+      "analysisResult": "All backend development tasks must include two mandatory subtasks: (1) Add/extend automated Jest tests for all new/changed logic, organized by feature-sliced structure, with strict TypeScript and CI compatibility; (2) Update and sync documentation (PRD in docs/prd/, TODO in docs/todos/, and README.md) for each feature, ensuring traceability, status, and kebab-case naming. Remove global 'Add Automated Tests for Backend Features' and 'Update and Sync Documentation' as standalone tasks; instead, make them required subtasks for every backend development task. All future backend tasks must include these as part of their implementation and verification criteria.",
+      "summary": "User schema and model fully implemented: all required fields, enums, validation, password hashing, unique email, address subdocument, and status. All tests pass, docs and TODOs are up to date. CI-ready, type-safe, and feature-sliced.",
+      "completedAt": "2025-07-01T08:39:26.136Z"
+    },
+    {
+      "id": "9590eb50-5836-45e0-bab8-f71f50410d2c",
+      "name": "Create JWT Authentication Service and Strategy",
+      "description": "Implement JWT service with access/refresh tokens, Passport JWT strategy, and token validation. Include notification integration for auth events.",
+      "status": "completed",
+      "dependencies": [
+        {
+          "taskId": "32cfd9a3-d14f-4058-8297-22015d9a0e68"
+        },
+        {
+          "taskId": "2c7bde61-0364-45d1-9f4f-bcab3979249a"
+        }
+      ],
+      "createdAt": "2025-06-30T07:32:56.567Z",
+      "updatedAt": "2025-07-04T05:27:12.120Z",
+      "relatedFiles": [
+        {
+          "path": "backend/src/features/auth/",
+          "type": "TO_MODIFY",
+          "description": "Auth feature code and tests"
+        }
+      ],
+      "implementationGuide": "1. Implement JWT service and Passport strategy. 2. Add token validation. 3. Integrate notifications. 4. Subtasks: (a) Add/extend Jest tests for all new/changed logic (feature-sliced, strict TypeScript, CI-ready); (b) Update and sync documentation (PRD, TODO, README) for this feature.",
+      "verificationCriteria": "- JWT service and strategy implemented\n- Token validation present\n- Notifications integrated\n- Automated Jest tests and documentation are present and up to date",
+      "analysisResult": "All backend development tasks must include two mandatory subtasks: (1) Add/extend automated Jest tests for all new/changed logic, organized by feature-sliced structure, with strict TypeScript and CI compatibility; (2) Update and sync documentation (PRD in docs/prd/, TODO in docs/todos/, and README.md) for each feature, ensuring traceability, status, and kebab-case naming. Remove global 'Add Automated Tests for Backend Features' and 'Update and Sync Documentation' as standalone tasks; instead, make them required subtasks for every backend development task. All future backend tasks must include these as part of their implementation and verification criteria.",
+      "summary": "All requirements are met: JWT service and Passport strategies are implemented with strict TypeScript, access/refresh tokens, token validation, and notification integration. Automated Jest tests and documentation (PRD, TODO, README) are present, up to date, and CI-ready. No lint or type errors remain.",
+      "completedAt": "2025-07-04T05:27:12.119Z"
+    }
+  ]
+}
