@@ -10,6 +10,7 @@ import * as Joi from 'joi';
       validationSchema: Joi.object({
         NODE_ENV: Joi.string().valid('development', 'production', 'test').required(),
         PORT: Joi.number().default(5000),
+        HOST: Joi.string().default('localhost'),
         MONGODB_URI: Joi.string().required(),
         JWT_SECRET: Joi.string().required(),
         JWT_EXPIRE: Joi.string().required(),
@@ -17,6 +18,10 @@ import * as Joi from 'joi';
         CLOUDINARY_CLOUD_NAME: Joi.string().required(),
         CLOUDINARY_API_KEY: Joi.string().required(),
         CLOUDINARY_API_SECRET: Joi.string().required(),
+        // Security-related environment variables
+        RATE_LIMIT_TTL: Joi.number().default(60000),
+        RATE_LIMIT_MAX: Joi.number().default(20),
+        ENABLE_TRUST_PROXY: Joi.string().valid('true', 'false').default('false'),
       }),
     }),
   ],
