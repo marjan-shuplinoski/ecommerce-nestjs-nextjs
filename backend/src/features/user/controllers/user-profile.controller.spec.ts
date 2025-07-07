@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/unbound-method, @typescript-eslint/no-unsafe-assignment */
 import { Test, TestingModule } from '@nestjs/testing';
+import { Reflector } from '@nestjs/core';
 import { UserProfileController } from './user-profile.controller';
 import { UserProfileService } from '../services/user-profile.service';
 import { FileUploadService } from '../../../shared/services/file-upload.service';
@@ -7,6 +8,9 @@ import { AddressType, UserRole, UserStatus } from '../schemas/user.schema';
 import { UpdateUserProfileDto, AddAddressDto, ChangePasswordDto } from '../dto';
 import { Request } from 'express';
 import { RequestUser } from '../../../shared/types/request-user.interface';
+import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
+import { RolesGuard } from '../../auth/guards/roles.guard';
+import { NotificationService } from '../../../shared/notification';
 
 // Create proper type for AuthenticatedRequest
 interface AuthenticatedRequest extends Request {
@@ -76,6 +80,32 @@ describe('UserProfileController', () => {
         {
           provide: FileUploadService,
           useValue: mockFileUploadService,
+        },
+        {
+          provide: JwtAuthGuard,
+          useValue: {
+            canActivate: jest.fn(() => true),
+          },
+        },
+        {
+          provide: RolesGuard,
+          useValue: {
+            canActivate: jest.fn(() => true),
+          },
+        },
+        {
+          provide: Reflector,
+          useValue: {
+            getAllAndOverride: jest.fn(),
+          },
+        },
+        {
+          provide: NotificationService,
+          useValue: {
+            notifySuccess: jest.fn(),
+            notifyError: jest.fn(),
+            notifyWarning: jest.fn(),
+          },
         },
       ],
     }).compile();

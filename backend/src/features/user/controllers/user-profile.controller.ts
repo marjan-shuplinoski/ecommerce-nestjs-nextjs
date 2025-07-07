@@ -11,11 +11,13 @@ import {
   UploadedFile,
   ParseIntPipe,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth, ApiConsumes } from '@nestjs/swagger';
 import { Request } from 'express';
 import { UserProfileService } from '../services';
+import { UserRole } from '../schemas/user.schema';
 import {
   UpdateUserProfileDto,
   AddAddressDto,
@@ -28,10 +30,10 @@ import {
 import { FileUploadService } from '../../../shared/services/file-upload.service';
 import { RequestUser } from '../../../shared/types/request-user.interface';
 
-// TODO: Import these guards when they're implemented
-// import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
-// import { RolesGuard } from '../../auth/guards/roles.guard';
-// import { Roles } from '../../auth/decorators/roles.decorator';
+// RBAC and Auth Guards
+import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
+import { RolesGuard } from '../../auth/guards/roles.guard';
+import { Roles } from '../../auth/decorators/roles.decorator';
 
 interface AuthenticatedRequest extends Request {
   user: RequestUser;
@@ -162,9 +164,8 @@ export class UserProfileController {
   @ApiResponse({ status: 200, description: 'Users retrieved successfully' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiResponse({ status: 403, description: 'Forbidden - Admin access required' })
-  // TODO: Uncomment when auth guards are implemented
-  // @UseGuards(JwtAuthGuard, RolesGuard)
-  // @Roles('admin')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN)
   @Get('admin/search')
   async searchUsers(@Query() searchDto: AdminUserSearchDto) {
     return this.userProfileService.searchUsers(searchDto);
@@ -176,9 +177,8 @@ export class UserProfileController {
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiResponse({ status: 403, description: 'Forbidden - Admin access required' })
   @ApiResponse({ status: 404, description: 'User not found' })
-  // TODO: Uncomment when auth guards are implemented
-  // @UseGuards(JwtAuthGuard, RolesGuard)
-  // @Roles('admin')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN)
   @Put('admin/:userId/status')
   async updateUserStatus(@Param('userId') userId: string, @Body() statusDto: UpdateUserStatusDto) {
     return this.userProfileService.updateUserStatus(userId, statusDto);
@@ -189,9 +189,8 @@ export class UserProfileController {
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiResponse({ status: 403, description: 'Forbidden - Admin access required' })
   @ApiResponse({ status: 404, description: 'User not found' })
-  // TODO: Uncomment when auth guards are implemented
-  // @UseGuards(JwtAuthGuard, RolesGuard)
-  // @Roles('admin')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN)
   @Put('admin/:userId/deactivate')
   async deactivateUser(@Param('userId') userId: string) {
     return this.userProfileService.deactivateUser(userId);
@@ -202,9 +201,8 @@ export class UserProfileController {
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiResponse({ status: 403, description: 'Forbidden - Admin access required' })
   @ApiResponse({ status: 404, description: 'User not found' })
-  // TODO: Uncomment when auth guards are implemented
-  // @UseGuards(JwtAuthGuard, RolesGuard)
-  // @Roles('admin')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN)
   @Put('admin/:userId/activate')
   async activateUser(@Param('userId') userId: string) {
     return this.userProfileService.activateUser(userId);
