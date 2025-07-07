@@ -7,6 +7,10 @@
 - [x] Implement JWT guards
 - [x] Wire up AuthModule and index.ts
 - [x] Add Jest unit tests for all logic
+- [x] Create Auth DTOs and Validation (register, login, forgot password, reset password)
+- [x] Add custom password match validator
+- [x] Add comprehensive DTO tests with class-validator
+- [x] Export DTOs and validators from auth module
 
 ## Tasks
 - [ ] Add integration tests (if needed)

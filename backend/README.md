@@ -116,14 +116,24 @@ This project implements robust JWT authentication using NestJS, Passport, and st
 - Access and refresh tokens
 - Passport JWT strategies (access, refresh)
 - JWT guards
+- Authentication DTOs with comprehensive validation
+- Custom validation decorators (password matching)
 - Notification integration for all auth events
 - Feature-sliced architecture
 - Full Jest unit/integration test coverage
+
+### Authentication DTOs
+- **RegisterDto**: User registration with name, email, password validation
+- **LoginDto**: User login with email and password
+- **ForgotPasswordDto**: Password reset request with email validation
+- **ResetPasswordDto**: Password reset with token and new password validation
+- **Custom Validators**: Password match validation for registration and reset
 
 ### Usage
 - Import `AuthModule` from `src/features/auth/` in your feature modules.
 - Use `JwtAuthGuard` and `RefreshTokenGuard` to protect routes.
 - Inject `JwtService` for token operations.
+- Import DTOs: `RegisterDto`, `LoginDto`, `ForgotPasswordDto`, `ResetPasswordDto`
 
 ### Environment Variables
 - `JWT_ACCESS_SECRET` (required)

@@ -4,3 +4,5 @@ export * from './strategies/jwt-access.strategy';
 export * from './strategies/jwt-refresh.strategy';
 export * from './guards/jwt-auth.guard';
 export * from './guards/refresh-token.guard';
+export * from './dto';
+export * from './validators/password-match.validator';
