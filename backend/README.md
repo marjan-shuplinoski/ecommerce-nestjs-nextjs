@@ -141,3 +141,30 @@ pnpm run test src/features/auth/
 ### CI/CD
 - All code and tests are CI-ready and linted.
 - Uses pnpm, strict TypeScript, and project standards.
+
+## Product Service
+
+Implements CRUD, advanced filtering, and search for products. All endpoints return notification objects for consistent API feedback.
+
+### Endpoints
+- `POST /products` — Create product (body: CreateProductDto)
+- `GET /products/:id` — Get product by ID
+- `PUT /products/:id` — Update product (body: UpdateProductDto)
+- `DELETE /products/:id` — Delete product
+- `GET /products` — Filter/search products (query: FilterProductDto)
+
+### Usage Example
+```bash
+curl -X POST http://localhost:3000/products \
+  -H 'Content-Type: application/json' \
+  -d '{"name":"Sample Product","price":99.99,"category":"electronics"}'
+```
+
+### DTOs
+- `CreateProductDto`, `UpdateProductDto`, `FilterProductDto` (see `src/features/products/dto/`)
+
+### Notification Integration
+All responses include a `notification` object for success/error feedback.
+
+### Tests
+- See `src/features/products/services/product.service.spec.ts` for full Jest coverage.
