@@ -4,7 +4,7 @@ import { NotificationService } from '../../../shared/notification';
 describe('JwtService', () => {
   let jwtService: JwtService;
   let notificationService: NotificationService;
-  let mockJwt: any;
+  let mockJwt: { signAsync: jest.Mock; verifyAsync: jest.Mock };
 
   beforeEach(() => {
     notificationService = new NotificationService();
@@ -12,7 +12,11 @@ describe('JwtService', () => {
       signAsync: jest.fn().mockResolvedValue('token'),
       verifyAsync: jest.fn().mockResolvedValue({ sub: 'userId', email: 'test@example.com' }),
     };
-    jwtService = new JwtService(mockJwt, notificationService);
+    // Provide a properly typed mock for testing
+    jwtService = new JwtService(
+      mockJwt as unknown as ConstructorParameters<typeof JwtService>[0],
+      notificationService,
+    );
   });
 
   it('should sign access token and notify', async () => {
@@ -31,13 +35,11 @@ describe('JwtService', () => {
   });
 
   it('should throw and notify on invalid payload', async () => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
     mockJwt.verifyAsync.mockResolvedValue({});
     await expect(jwtService.verifyToken('token')).rejects.toThrow('Invalid JWT payload');
   });
 
   it('should throw and notify on error', async () => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
     mockJwt.verifyAsync.mockRejectedValue(new Error('fail'));
     await expect(jwtService.verifyToken('token')).rejects.toThrow('fail');
   });

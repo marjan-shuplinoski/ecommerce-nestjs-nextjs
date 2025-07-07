@@ -1,0 +1,591 @@
+import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model, Types } from 'mongoose';
+import * as bcrypt from 'bcryptjs';
+import { User, UserDocument, Address, UserStatus } from '../schemas/user.schema';
+import {
+  UpdateUserProfileDto,
+  AddAddressDto,
+  UpdateAddressDto,
+  ChangePasswordDto,
+  AdminUserSearchDto,
+  UpdateUserStatusDto,
+  SetDefaultAddressDto,
+} from '../dto';
+import { NotificationService, Notification } from '../../../shared/notification';
+
+@Injectable()
+export class UserProfileService {
+  constructor(
+    @InjectModel(User.name) private userModel: Model<UserDocument>,
+    private notificationService: NotificationService,
+  ) {}
+
+  /**
+   * Get user profile by ID
+   */
+  async getUserProfile(userId: string): Promise<{ data?: User; notification: Notification }> {
+    try {
+      if (!Types.ObjectId.isValid(userId)) {
+        return {
+          notification: this.notificationService.notifyError('Invalid user ID', 'INVALID_USER_ID'),
+        };
+      }
+
+      const user = await this.userModel.findById(userId).select('-password').exec();
+      if (!user) {
+        return {
+          notification: this.notificationService.notifyError('User not found', 'USER_NOT_FOUND'),
+        };
+      }
+
+      return {
+        data: user.toObject() as User,
+        notification: this.notificationService.notifySuccess('Profile retrieved successfully'),
+      };
+    } catch {
+      return {
+        notification: this.notificationService.notifyError(
+          'Failed to retrieve profile',
+          'PROFILE_RETRIEVAL_ERROR',
+        ),
+      };
+    }
+  }
+
+  /**
+   * Update user profile
+   */
+  async updateProfile(
+    userId: string,
+    updateDto: UpdateUserProfileDto,
+  ): Promise<{ data?: User; notification: Notification }> {
+    try {
+      if (!Types.ObjectId.isValid(userId)) {
+        return {
+          notification: this.notificationService.notifyError('Invalid user ID', 'INVALID_USER_ID'),
+        };
+      }
+
+      const user = await this.userModel
+        .findByIdAndUpdate(userId, updateDto, { new: true })
+        .select('-password')
+        .exec();
+
+      if (!user) {
+        return {
+          notification: this.notificationService.notifyError('User not found', 'USER_NOT_FOUND'),
+        };
+      }
+
+      return {
+        data: user.toObject() as User,
+        notification: this.notificationService.notifySuccess('Profile updated successfully'),
+      };
+    } catch {
+      return {
+        notification: this.notificationService.notifyError(
+          'Failed to update profile',
+          'PROFILE_UPDATE_ERROR',
+        ),
+      };
+    }
+  }
+
+  /**
+   * Add a new address to user profile
+   */
+  async addAddress(
+    userId: string,
+    addressDto: AddAddressDto,
+  ): Promise<{ data?: User; notification: Notification }> {
+    try {
+      if (!Types.ObjectId.isValid(userId)) {
+        return {
+          notification: this.notificationService.notifyError('Invalid user ID', 'INVALID_USER_ID'),
+        };
+      }
+
+      const user = await this.userModel.findById(userId).exec();
+      if (!user) {
+        return {
+          notification: this.notificationService.notifyError('User not found', 'USER_NOT_FOUND'),
+        };
+      }
+
+      // If this is the first address or user wants it as default, set it as default
+      const newAddress: Address = {
+        ...addressDto,
+        isDefault: addressDto.isDefault || user.addresses.length === 0,
+      };
+
+      // If setting as default, unset other default addresses
+      if (newAddress.isDefault) {
+        user.addresses.forEach((addr) => {
+          addr.isDefault = false;
+        });
+      }
+
+      user.addresses.push(newAddress);
+      await user.save();
+
+      const updatedUser = await this.userModel.findById(userId).select('-password').exec();
+
+      return {
+        data: updatedUser?.toObject() as User,
+        notification: this.notificationService.notifySuccess('Address added successfully'),
+      };
+    } catch {
+      return {
+        notification: this.notificationService.notifyError(
+          'Failed to add address',
+          'ADDRESS_ADD_ERROR',
+        ),
+      };
+    }
+  }
+
+  /**
+   * Update an existing address
+   */
+  async updateAddress(
+    userId: string,
+    addressIndex: number,
+    updateDto: UpdateAddressDto,
+  ): Promise<{ data?: User; notification: Notification }> {
+    try {
+      if (!Types.ObjectId.isValid(userId)) {
+        return {
+          notification: this.notificationService.notifyError('Invalid user ID', 'INVALID_USER_ID'),
+        };
+      }
+
+      const user = await this.userModel.findById(userId).exec();
+      if (!user) {
+        return {
+          notification: this.notificationService.notifyError('User not found', 'USER_NOT_FOUND'),
+        };
+      }
+
+      if (addressIndex >= user.addresses.length) {
+        return {
+          notification: this.notificationService.notifyError(
+            'Address not found',
+            'ADDRESS_NOT_FOUND',
+          ),
+        };
+      }
+
+      // Update address fields
+      Object.assign(user.addresses[addressIndex], updateDto);
+
+      // Handle default address logic
+      if (updateDto.isDefault) {
+        user.addresses.forEach((addr, idx) => {
+          addr.isDefault = idx === addressIndex;
+        });
+      }
+
+      await user.save();
+
+      const updatedUser = await this.userModel.findById(userId).select('-password').exec();
+
+      return {
+        data: updatedUser?.toObject() as User,
+        notification: this.notificationService.notifySuccess('Address updated successfully'),
+      };
+    } catch {
+      return {
+        notification: this.notificationService.notifyError(
+          'Failed to update address',
+          'ADDRESS_UPDATE_ERROR',
+        ),
+      };
+    }
+  }
+
+  /**
+   * Remove an address from user profile
+   */
+  async removeAddress(
+    userId: string,
+    addressIndex: number,
+  ): Promise<{ data?: User; notification: Notification }> {
+    try {
+      if (!Types.ObjectId.isValid(userId)) {
+        return {
+          notification: this.notificationService.notifyError('Invalid user ID', 'INVALID_USER_ID'),
+        };
+      }
+
+      const user = await this.userModel.findById(userId).exec();
+      if (!user) {
+        return {
+          notification: this.notificationService.notifyError('User not found', 'USER_NOT_FOUND'),
+        };
+      }
+
+      if (addressIndex >= user.addresses.length) {
+        return {
+          notification: this.notificationService.notifyError(
+            'Address not found',
+            'ADDRESS_NOT_FOUND',
+          ),
+        };
+      }
+
+      const wasDefault = user.addresses[addressIndex].isDefault;
+      user.addresses.splice(addressIndex, 1);
+
+      // If removed address was default and there are still addresses, set first one as default
+      if (wasDefault && user.addresses.length > 0) {
+        user.addresses[0].isDefault = true;
+      }
+
+      await user.save();
+
+      const updatedUser = await this.userModel.findById(userId).select('-password').exec();
+
+      return {
+        data: updatedUser?.toObject() as User,
+        notification: this.notificationService.notifySuccess('Address removed successfully'),
+      };
+    } catch {
+      return {
+        notification: this.notificationService.notifyError(
+          'Failed to remove address',
+          'ADDRESS_REMOVE_ERROR',
+        ),
+      };
+    }
+  }
+
+  /**
+   * Change user password
+   */
+  async changePassword(
+    userId: string,
+    changePasswordDto: ChangePasswordDto,
+  ): Promise<{ notification: Notification }> {
+    try {
+      if (!Types.ObjectId.isValid(userId)) {
+        return {
+          notification: this.notificationService.notifyError('Invalid user ID', 'INVALID_USER_ID'),
+        };
+      }
+
+      const user = await this.userModel.findById(userId).select('+password').exec();
+      if (!user) {
+        return {
+          notification: this.notificationService.notifyError('User not found', 'USER_NOT_FOUND'),
+        };
+      }
+
+      // Verify current password
+      const isCurrentPasswordValid = await bcrypt.compare(
+        changePasswordDto.currentPassword,
+        user.password,
+      );
+
+      if (!isCurrentPasswordValid) {
+        return {
+          notification: this.notificationService.notifyError(
+            'Current password is incorrect',
+            'INVALID_CURRENT_PASSWORD',
+          ),
+        };
+      }
+
+      // Hash new password
+      const saltRounds = 12;
+      const hashedNewPassword = await bcrypt.hash(changePasswordDto.newPassword, saltRounds);
+
+      // Update password
+      user.password = hashedNewPassword;
+      await user.save();
+
+      return {
+        notification: this.notificationService.notifySuccess('Password changed successfully'),
+      };
+    } catch {
+      return {
+        notification: this.notificationService.notifyError(
+          'Failed to change password',
+          'PASSWORD_CHANGE_ERROR',
+        ),
+      };
+    }
+  }
+
+  /**
+   * Set default address for user
+   */
+  async setDefaultAddress(
+    userId: string,
+    setDefaultDto: SetDefaultAddressDto,
+  ): Promise<{ data?: User; notification: Notification }> {
+    try {
+      if (!Types.ObjectId.isValid(userId)) {
+        return {
+          notification: this.notificationService.notifyError('Invalid user ID', 'INVALID_USER_ID'),
+        };
+      }
+
+      const user = await this.userModel.findById(userId).exec();
+      if (!user) {
+        return {
+          notification: this.notificationService.notifyError('User not found', 'USER_NOT_FOUND'),
+        };
+      }
+
+      if (setDefaultDto.addressIndex >= user.addresses.length) {
+        return {
+          notification: this.notificationService.notifyError(
+            'Address not found',
+            'ADDRESS_NOT_FOUND',
+          ),
+        };
+      }
+
+      // Reset all addresses to non-default
+      user.addresses.forEach((address) => {
+        address.isDefault = false;
+      });
+
+      // Set the specified address as default
+      user.addresses[setDefaultDto.addressIndex].isDefault = true;
+      await user.save();
+
+      const updatedUser = await this.userModel.findById(userId).select('-password').exec();
+
+      return {
+        data: updatedUser?.toObject() as User,
+        notification: this.notificationService.notifySuccess(
+          'Default address updated successfully',
+        ),
+      };
+    } catch {
+      return {
+        notification: this.notificationService.notifyError(
+          'Failed to set default address',
+          'SET_DEFAULT_ADDRESS_ERROR',
+        ),
+      };
+    }
+  }
+
+  /**
+   * Search and filter users (Admin only)
+   */
+  async searchUsers(searchDto: AdminUserSearchDto): Promise<{
+    data?: { users: User[]; total: number; page: number; limit: number };
+    notification: Notification;
+  }> {
+    try {
+      const { search, role, status, isActive, emailVerified, page = 1, limit = 10 } = searchDto;
+
+      // Build filter query
+      const filter: Record<string, any> = {};
+
+      if (search) {
+        filter.$or = [
+          { email: { $regex: search, $options: 'i' } },
+          { firstName: { $regex: search, $options: 'i' } },
+          { lastName: { $regex: search, $options: 'i' } },
+        ];
+      }
+
+      if (role) {
+        filter.role = role;
+      }
+
+      if (status) {
+        filter.status = status;
+      }
+
+      if (typeof isActive === 'boolean') {
+        filter.isActive = isActive;
+      }
+
+      if (typeof emailVerified === 'boolean') {
+        filter.emailVerified = emailVerified;
+      }
+
+      // Calculate pagination
+      const skip = (page - 1) * limit;
+
+      // Execute query with pagination
+      const [users, total] = await Promise.all([
+        this.userModel
+          .find(filter)
+          .select('-password')
+          .sort({ createdAt: -1 })
+          .skip(skip)
+          .limit(limit)
+          .exec(),
+        this.userModel.countDocuments(filter),
+      ]);
+
+      return {
+        data: {
+          users: users.map((user) => user.toObject() as User),
+          total,
+          page,
+          limit,
+        },
+        notification: this.notificationService.notifySuccess('Users retrieved successfully'),
+      };
+    } catch {
+      return {
+        notification: this.notificationService.notifyError(
+          'Failed to search users',
+          'USER_SEARCH_ERROR',
+        ),
+      };
+    }
+  }
+
+  /**
+   * Update user status (Admin only)
+   */
+  async updateUserStatus(
+    userId: string,
+    statusDto: UpdateUserStatusDto,
+  ): Promise<{ data?: User; notification: Notification }> {
+    try {
+      if (!Types.ObjectId.isValid(userId)) {
+        return {
+          notification: this.notificationService.notifyError('Invalid user ID', 'INVALID_USER_ID'),
+        };
+      }
+
+      const updateData: Record<string, any> = { status: statusDto.status };
+      if (typeof statusDto.isActive === 'boolean') {
+        updateData.isActive = statusDto.isActive;
+      }
+
+      const user = await this.userModel
+        .findByIdAndUpdate(userId, updateData, { new: true })
+        .select('-password')
+        .exec();
+
+      if (!user) {
+        return {
+          notification: this.notificationService.notifyError('User not found', 'USER_NOT_FOUND'),
+        };
+      }
+
+      // Determine notification type based on status
+      let notification: Notification;
+      if (statusDto.status === UserStatus.SUSPENDED || !statusDto.isActive) {
+        notification = this.notificationService.notifyWarning(
+          'User account has been deactivated',
+          'USER_DEACTIVATED',
+        );
+      } else {
+        notification = this.notificationService.notifySuccess('User status updated successfully');
+      }
+
+      return {
+        data: user.toObject() as User,
+        notification,
+      };
+    } catch {
+      return {
+        notification: this.notificationService.notifyError(
+          'Failed to update user status',
+          'USER_STATUS_UPDATE_ERROR',
+        ),
+      };
+    }
+  }
+
+  /**
+   * Deactivate user account (Admin only)
+   */
+  async deactivateUser(userId: string): Promise<{ data?: User; notification: Notification }> {
+    try {
+      if (!Types.ObjectId.isValid(userId)) {
+        return {
+          notification: this.notificationService.notifyError('Invalid user ID', 'INVALID_USER_ID'),
+        };
+      }
+
+      const user = await this.userModel
+        .findByIdAndUpdate(
+          userId,
+          {
+            isActive: false,
+            status: UserStatus.SUSPENDED,
+          },
+          { new: true },
+        )
+        .select('-password')
+        .exec();
+
+      if (!user) {
+        return {
+          notification: this.notificationService.notifyError('User not found', 'USER_NOT_FOUND'),
+        };
+      }
+
+      return {
+        data: user.toObject() as User,
+        notification: this.notificationService.notifyWarning(
+          'User account has been deactivated',
+          'USER_DEACTIVATED',
+        ),
+      };
+    } catch {
+      return {
+        notification: this.notificationService.notifyError(
+          'Failed to deactivate user',
+          'USER_DEACTIVATION_ERROR',
+        ),
+      };
+    }
+  }
+
+  /**
+   * Activate user account (Admin only)
+   */
+  async activateUser(userId: string): Promise<{ data?: User; notification: Notification }> {
+    try {
+      if (!Types.ObjectId.isValid(userId)) {
+        return {
+          notification: this.notificationService.notifyError('Invalid user ID', 'INVALID_USER_ID'),
+        };
+      }
+
+      const user = await this.userModel
+        .findByIdAndUpdate(
+          userId,
+          {
+            isActive: true,
+            status: UserStatus.ACTIVE,
+          },
+          { new: true },
+        )
+        .select('-password')
+        .exec();
+
+      if (!user) {
+        return {
+          notification: this.notificationService.notifyError('User not found', 'USER_NOT_FOUND'),
+        };
+      }
+
+      return {
+        data: user.toObject() as User,
+        notification: this.notificationService.notifySuccess('User account has been activated'),
+      };
+    } catch {
+      return {
+        notification: this.notificationService.notifyError(
+          'Failed to activate user',
+          'USER_ACTIVATION_ERROR',
+        ),
+      };
+    }
+  }
+}

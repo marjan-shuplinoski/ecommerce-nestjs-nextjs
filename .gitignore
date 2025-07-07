@@ -46,5 +46,4 @@ nest-cli.json.bak
 /test-results.xml
 
 # Tasks
-/tasks/WebGUI.md
-/tasks/memory/*
+/tasks
