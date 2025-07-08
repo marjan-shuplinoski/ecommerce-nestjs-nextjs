@@ -6,10 +6,10 @@
 - **Target Date**: 2025-07-03
 - **Assigned To**: @marjan
 - **Created**: 2024-06-01
-- **Last Updated**: 2025-07-03
+- **Last Updated**: 2025-07-08
 
 ## Description
-All order service logic, DTOs, controller, and tests implemented and lint/type clean. All requirements traceable to PRD.
+All order service logic, DTOs, controller, and tests implemented and lint/type clean. All requirements traceable to PRD. E2E test coverage, RBAC, notification, and Postman/API doc sync complete.
 
 ## Completed
 - [x] Define Order and OrderItem schemas/types
@@ -24,10 +24,12 @@ All order service logic, DTOs, controller, and tests implemented and lint/type c
 - [x] Add Jest integration tests (in-memory MongoDB)
 - [x] Lint/type fixes for all new code
 - [x] Update documentation and sync with code
+- [x] E2E test coverage (orders, RBAC, notifications)
+- [x] Postman/API doc sync
 
 ## Tasks
 ### Backend
-- [ ] E2E test coverage (future)
+- [x] E2E test coverage (orders, RBAC, notifications)
 
 ### Frontend
 - [ ] Not in scope
@@ -42,7 +44,7 @@ All order service logic, DTOs, controller, and tests implemented and lint/type c
 ### Integration Tests
 - [x] In-memory MongoDB
 ### E2E Tests
-- [ ] (Future)
+- [x] Orders, RBAC, notification, error/edge cases (see test/order.e2e-spec.ts)
 
 ## Documentation
 - [x] Update API documentation

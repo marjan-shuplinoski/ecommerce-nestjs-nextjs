@@ -1,0 +1,97 @@
+{
+  "info": {
+    "_postman_id": "ecommerce-api-collection",
+    "name": "Ecommerce API Collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Comprehensive collection for all backend endpoints. Includes auth, categories, products, cart, orders, user profile, admin, and health."
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        { "name": "Register", "request": { "method": "POST", "url": "{{baseUrl}}/auth/register", "body": { "mode": "raw", "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"password123\",\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\"\n}" }, "header": [ { "key": "Content-Type", "value": "application/json" } ] } },
+        { "name": "Login", "request": { "method": "POST", "url": "{{baseUrl}}/auth/login", "body": { "mode": "raw", "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"password123\"\n}" }, "header": [ { "key": "Content-Type", "value": "application/json" } ] } },
+        { "name": "Logout", "request": { "method": "POST", "url": "{{baseUrl}}/auth/logout", "header": [ { "key": "Authorization", "value": "Bearer {{accessToken}}" } ] } },
+        { "name": "Refresh Token", "request": { "method": "POST", "url": "{{baseUrl}}/auth/refresh", "body": { "mode": "raw", "raw": "{\n  \"refreshToken\": \"{{refreshToken}}\"\n}" }, "header": [ { "key": "Content-Type", "value": "application/json" } ] } },
+        { "name": "Reset Password", "request": { "method": "POST", "url": "{{baseUrl}}/auth/reset-password", "body": { "mode": "raw", "raw": "{\n  \"email\": \"user@example.com\"\n}" }, "header": [ { "key": "Content-Type", "value": "application/json" } ] } }
+      ]
+    },
+    {
+      "name": "Categories",
+      "item": [
+        { "name": "Get Categories", "request": { "method": "GET", "url": "{{baseUrl}}/categories" } },
+        { "name": "Create Category", "request": { "method": "POST", "url": "{{baseUrl}}/categories", "body": { "mode": "raw", "raw": "{\n  \"name\": \"Electronics\"\n}" }, "header": [ { "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{accessToken}}" } ] } },
+        { "name": "Update Category", "request": { "method": "PATCH", "url": "{{baseUrl}}/categories/1", "body": { "mode": "raw", "raw": "{\n  \"name\": \"Updated\"\n}" }, "header": [ { "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{accessToken}}" } ] } },
+        { "name": "Delete Category", "request": { "method": "DELETE", "url": "{{baseUrl}}/categories/1", "header": [ { "key": "Authorization", "value": "Bearer {{accessToken}}" } ] } },
+        { "name": "Get Hierarchy", "request": { "method": "GET", "url": "{{baseUrl}}/categories/hierarchy" } },
+        { "name": "Search Categories", "request": { "method": "GET", "url": "{{baseUrl}}/categories/search?q=electronics" } }
+      ]
+    },
+    {
+      "name": "Products",
+      "item": [
+        { "name": "Get Products", "request": { "method": "GET", "url": "{{baseUrl}}/products" } },
+        { "name": "Create Product", "request": { "method": "POST", "url": "{{baseUrl}}/products", "body": { "mode": "raw", "raw": "{\n  \"name\": \"Phone\",\n  \"price\": 499\n}" }, "header": [ { "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{accessToken}}" } ] } },
+        { "name": "Get Product By ID", "request": { "method": "GET", "url": "{{baseUrl}}/products/1" } },
+        { "name": "Update Product", "request": { "method": "PUT", "url": "{{baseUrl}}/products/1", "body": { "mode": "raw", "raw": "{\n  \"name\": \"Updated Phone\",\n  \"price\": 599\n}" }, "header": [ { "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{accessToken}}" } ] } },
+        { "name": "Delete Product", "request": { "method": "DELETE", "url": "{{baseUrl}}/products/1", "header": [ { "key": "Authorization", "value": "Bearer {{accessToken}}" } ] } }
+      ]
+    },
+    {
+      "name": "Cart",
+      "item": [
+        { "name": "Create Cart", "request": { "method": "POST", "url": "{{baseUrl}}/cart", "header": [ { "key": "Authorization", "value": "Bearer {{accessToken}}" } ] } },
+        { "name": "Get Cart", "request": { "method": "GET", "url": "{{baseUrl}}/cart/1", "header": [ { "key": "Authorization", "value": "Bearer {{accessToken}}" } ] } },
+        { "name": "Add Item", "request": { "method": "PATCH", "url": "{{baseUrl}}/cart/1/add-item", "body": { "mode": "raw", "raw": "{\n  \"productId\": \"1\",\n  \"quantity\": 1\n}" }, "header": [ { "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{accessToken}}" } ] } },
+        { "name": "Update Item", "request": { "method": "PATCH", "url": "{{baseUrl}}/cart/1/update-item", "body": { "mode": "raw", "raw": "{\n  \"productId\": \"1\",\n  \"quantity\": 2\n}" }, "header": [ { "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{accessToken}}" } ] } },
+        { "name": "Remove Item", "request": { "method": "PATCH", "url": "{{baseUrl}}/cart/1/remove-item", "body": { "mode": "raw", "raw": "{\n  \"productId\": \"1\"\n}" }, "header": [ { "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{accessToken}}" } ] } },
+        { "name": "Clear Cart", "request": { "method": "DELETE", "url": "{{baseUrl}}/cart/1/clear", "header": [ { "key": "Authorization", "value": "Bearer {{accessToken}}" } ] } }
+      ]
+    },
+    {
+      "name": "Orders",
+      "item": [
+        { "name": "Create Order", "request": { "method": "POST", "url": "{{baseUrl}}/orders", "body": { "mode": "raw", "raw": "{\n  \"cartId\": \"1\",\n  \"shippingAddress\": {\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\",\n    \"street\": \"123 Main St\",\n    \"city\": \"Metropolis\",\n    \"state\": \"NY\",\n    \"zipCode\": \"12345\",\n    \"country\": \"USA\",\n    \"phoneNumber\": \"1234567890\"\n  },\n  \"billingAddress\": {\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\",\n    \"street\": \"123 Main St\",\n    \"city\": \"Metropolis\",\n    \"state\": \"NY\",\n    \"zipCode\": \"12345\",\n    \"country\": \"USA\",\n    \"phoneNumber\": \"1234567890\"\n  }\n}" }, "header": [ { "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{accessToken}}" } ] } },
+        { "name": "Get Orders", "request": { "method": "GET", "url": "{{baseUrl}}/orders", "header": [ { "key": "Authorization", "value": "Bearer {{accessToken}}" } ] } },
+        { "name": "Get Order By ID", "request": { "method": "GET", "url": "{{baseUrl}}/orders/1", "header": [ { "key": "Authorization", "value": "Bearer {{accessToken}}" } ] } },
+        { "name": "Update Order Status", "request": { "method": "PATCH", "url": "{{baseUrl}}/orders/1/status", "body": { "mode": "raw", "raw": "{\n  \"status\": \"shipped\"\n}" }, "header": [ { "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{accessToken}}" } ] } },
+        { "name": "Confirm Payment", "request": { "method": "PATCH", "url": "{{baseUrl}}/orders/1/confirm-payment", "body": { "mode": "raw", "raw": "{\n  \"paymentStatus\": \"confirmed\"\n}" }, "header": [ { "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{accessToken}}" } ] } },
+        { "name": "Cancel Order", "request": { "method": "PUT", "url": "{{baseUrl}}/orders/1/cancel", "header": [ { "key": "Authorization", "value": "Bearer {{accessToken}}" } ] } }
+      ]
+    },
+    {
+      "name": "User Profile",
+      "item": [
+        { "name": "Get Profile", "request": { "method": "GET", "url": "{{baseUrl}}/users/me", "header": [ { "key": "Authorization", "value": "Bearer {{accessToken}}" } ] } },
+        { "name": "Update Profile", "request": { "method": "PUT", "url": "{{baseUrl}}/users/me", "body": { "mode": "raw", "raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\"\n}" }, "header": [ { "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{accessToken}}" } ] } },
+        { "name": "Add Address", "request": { "method": "POST", "url": "{{baseUrl}}/users/me/addresses", "body": { "mode": "raw", "raw": "{\n  \"street\": \"123 Main St\",\n  \"city\": \"Metropolis\",\n  \"state\": \"NY\",\n  \"zipCode\": \"12345\",\n  \"country\": \"USA\",\n  \"phoneNumber\": \"1234567890\"\n}" }, "header": [ { "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{accessToken}}" } ] } },
+        { "name": "Update Address", "request": { "method": "PUT", "url": "{{baseUrl}}/users/me/addresses/0", "body": { "mode": "raw", "raw": "{\n  \"street\": \"456 Elm St\"\n}" }, "header": [ { "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{accessToken}}" } ] } },
+        { "name": "Delete Address", "request": { "method": "DELETE", "url": "{{baseUrl}}/users/me/addresses/0", "header": [ { "key": "Authorization", "value": "Bearer {{accessToken}}" } ] } },
+        { "name": "Change Password", "request": { "method": "PUT", "url": "{{baseUrl}}/users/me/password", "body": { "mode": "raw", "raw": "{\n  \"oldPassword\": \"password123\",\n  \"newPassword\": \"newpass456\"\n}" }, "header": [ { "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{accessToken}}" } ] } },
+        { "name": "Upload Avatar", "request": { "method": "POST", "url": "{{baseUrl}}/users/me/avatar", "header": [ { "key": "Authorization", "value": "Bearer {{accessToken}}" } ] } },
+        { "name": "Set Default Address", "request": { "method": "PUT", "url": "{{baseUrl}}/users/me/addresses/default", "body": { "mode": "raw", "raw": "{\n  \"index\": 0\n}" }, "header": [ { "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{accessToken}}" } ] } }
+      ]
+    },
+    {
+      "name": "Admin",
+      "item": [
+        { "name": "Search Users", "request": { "method": "GET", "url": "{{baseUrl}}/users/admin/search", "header": [ { "key": "Authorization", "value": "Bearer {{accessToken}}" } ] } },
+        { "name": "Update User Status", "request": { "method": "PUT", "url": "{{baseUrl}}/users/admin/1/status", "body": { "mode": "raw", "raw": "{\n  \"status\": \"active\"\n}" }, "header": [ { "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{accessToken}}" } ] } },
+        { "name": "Deactivate User", "request": { "method": "PUT", "url": "{{baseUrl}}/users/admin/1/deactivate", "header": [ { "key": "Authorization", "value": "Bearer {{accessToken}}" } ] } },
+        { "name": "Activate User", "request": { "method": "PUT", "url": "{{baseUrl}}/users/admin/1/activate", "header": [ { "key": "Authorization", "value": "Bearer {{accessToken}}" } ] } }
+      ]
+    },
+    {
+      "name": "Health",
+      "item": [
+        { "name": "Health Check", "request": { "method": "GET", "url": "{{baseUrl}}/health" } }
+      ]
+    }
+  ],
+  "event": [],
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:3000", "type": "string" },
+    { "key": "accessToken", "value": "", "type": "string" },
+    { "key": "refreshToken", "value": "", "type": "string" }
+  ]
+}

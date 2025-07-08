@@ -47,6 +47,8 @@ Current ecommerce backend lacks robust, feature-sliced order management with str
 - [x] 100% lint/type/test clean
 - [x] Full Jest coverage (unit/integration)
 - [x] Complete RESTful API
+- [x] E2E test coverage (orders, RBAC, notifications)
+- [x] Postman collection and API doc sync
 
 ### Frontend
 - Not in scope
@@ -58,7 +60,7 @@ Current ecommerce backend lacks robust, feature-sliced order management with str
 ### Integration Tests
 - [x] In-memory MongoDB
 ### E2E Tests
-- [ ] (Future)
+- [x] Orders, RBAC, notification, error/edge cases (see test/order.e2e-spec.ts)
 
 ## Traceability
 - All tasks and features mapped in order-service.todos.md
@@ -73,3 +75,5 @@ Current ecommerce backend lacks robust, feature-sliced order management with str
 - [x] API docs
 - [x] Controller Jest tests
 - [x] Documentation finalization
+- [x] E2E test coverage (orders, RBAC, notifications)
+- [x] Postman/API doc sync
