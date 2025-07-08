@@ -8,6 +8,7 @@ import { NotificationService } from './shared/notification';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ProductModule } from './features/products/product.module';
+import { CartModule } from './features/cart/cart.module';
 import {
   HttpExceptionFilter,
   GlobalValidationPipe,
@@ -21,6 +22,7 @@ import {
     DatabaseModule,
     HealthModule,
     ProductModule,
+    CartModule,
     ThrottlerModule.forRoot(rateLimitConfig),
   ],
   controllers: [AppController],

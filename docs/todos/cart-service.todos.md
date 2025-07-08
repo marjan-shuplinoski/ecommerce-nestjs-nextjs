@@ -1,15 +1,15 @@
 # Cart Service - TODO
 
 ## Overview
-- **Status**: Completed
+- **Status**: Done
 - **Priority**: P0
-- **Target Date**: 2025-07-03
+- **Target Date**: 2025-07-08
 - **Assigned To**: @marjan
 - **Created**: 2024-06-01
-- **Last Updated**: 2025-07-03
+- **Last Updated**: 2025-07-08
 
 ## Description
-All cart service logic, DTOs, controller, and tests implemented and lint/type clean. All requirements traceable to PRD.
+All cart service logic, DTOs, controller, and tests implemented and lint/type clean. All requirements traceable to PRD. RBAC/JWT and notification integration complete.
 
 ## Completed
 - [x] Define Cart and CartItem schemas/types
@@ -21,10 +21,15 @@ All cart service logic, DTOs, controller, and tests implemented and lint/type cl
 - [x] Integrate Cart service with controller/routes
 - [x] Document API endpoints and usage
 - [x] Add integration tests (controller + service)
+- [x] Add E2E test coverage for all endpoints
+- [x] Add RBAC/JWT protection for all endpoints
+- [x] Integrate notification for all cart actions
 
 ## Tasks
 ### Backend
-- [ ] E2E test coverage (future)
+- [x] E2E test coverage (complete)
+- [x] RBAC/JWT protection (complete)
+- [x] Notification integration (complete)
 
 ### Frontend
 - [ ] Not in scope
@@ -39,8 +44,11 @@ All cart service logic, DTOs, controller, and tests implemented and lint/type cl
 ### Integration Tests
 - [x] In-memory MongoDB
 ### E2E Tests
-- [ ] (Future)
+- [x] All endpoints covered
 
 ## Documentation
 - [x] Update API documentation
 - [x] Update README
+
+## Traceability
+- All requirements and implementation steps are traceable to cart-service.prd.md

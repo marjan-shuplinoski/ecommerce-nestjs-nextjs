@@ -9,6 +9,7 @@ import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { RefreshTokenGuard } from './guards/refresh-token.guard';
 import { RolesGuard } from './guards/roles.guard';
 import { NotificationService } from '../../shared/notification';
+import { AuthService } from './services/auth.service';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { NotificationService } from '../../shared/notification';
     }),
   ],
   providers: [
+    AuthService,
     JwtService,
     JwtAccessStrategy,
     JwtRefreshStrategy,
@@ -32,6 +34,6 @@ import { NotificationService } from '../../shared/notification';
     RolesGuard,
     NotificationService,
   ],
-  exports: [JwtService, JwtAuthGuard, RefreshTokenGuard, RolesGuard],
+  exports: [JwtService, JwtAuthGuard, RefreshTokenGuard, RolesGuard, AuthService],
 })
 export class AuthModule {}
