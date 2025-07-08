@@ -9,7 +9,7 @@ export default async function handler(
         const response = await fetch(`${backendUrl}/health`);
         const data = await response.json();
         res.status(response.status).json(data);
-    } catch (error) {
+    } catch {
         res.status(502).json({ status: 'error', message: 'Backend unavailable' });
     }
 }
