@@ -11,7 +11,7 @@ module.exports = {
     transform: {
         '^.+\\.(ts|tsx|js|jsx)$': 'babel-jest',
     },
-    setupFiles: ['<rootDir>/jest.setup.ts'],
+    setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
     globals: {
         'ts-jest': {
             tsconfig: 'tsconfig.json',

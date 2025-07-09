@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosInstance } from 'axios';
 
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
@@ -16,7 +16,7 @@ const mockApiInstance = {
   delete: jest.fn(),
 };
 
-mockedAxios.create.mockReturnValue(mockApiInstance as any);
+mockedAxios.create.mockReturnValue(mockApiInstance as unknown as AxiosInstance);
 
 import { getApiInstance } from './client';
 
