@@ -19,7 +19,7 @@ export class UserProfileService {
   constructor(
     @InjectModel(User.name) private userModel: Model<UserDocument>,
     private notificationService: NotificationService,
-  ) {}
+  ) { }
 
   /**
    * Get user profile by ID
@@ -585,6 +585,28 @@ export class UserProfileService {
           'Failed to activate user',
           'USER_ACTIVATION_ERROR',
         ),
+      };
+    }
+  }
+
+  /**
+   * Get user by email (for authentication)
+   */
+  async getUserByEmail(email: string): Promise<{ data?: User; notification: Notification }> {
+    try {
+      const user = await this.userModel.findOne({ email }).exec();
+      if (!user) {
+        return {
+          notification: this.notificationService.notifyError('User not found', 'USER_NOT_FOUND'),
+        };
+      }
+      return {
+        data: user,
+        notification: this.notificationService.notifySuccess('User found'),
+      };
+    } catch {
+      return {
+        notification: this.notificationService.notifyError('Failed to retrieve user', 'USER_LOOKUP_ERROR'),
       };
     }
   }

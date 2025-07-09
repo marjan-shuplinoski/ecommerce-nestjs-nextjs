@@ -9,6 +9,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ProductModule } from './features/products/product.module';
 import { CartModule } from './features/cart/cart.module';
+import { AuthModule } from './features/auth/auth.module';
+import { CategoryModule } from './features/categories/category.module';
 import {
   HttpExceptionFilter,
   GlobalValidationPipe,
@@ -23,6 +25,8 @@ import {
     HealthModule,
     ProductModule,
     CartModule,
+    AuthModule,
+    CategoryModule,
     ThrottlerModule.forRoot(rateLimitConfig),
   ],
   controllers: [AppController],

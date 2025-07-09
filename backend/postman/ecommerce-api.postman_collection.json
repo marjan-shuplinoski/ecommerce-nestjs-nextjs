@@ -9,11 +9,11 @@
     {
       "name": "Auth",
       "item": [
-        { "name": "Register", "request": { "method": "POST", "url": "{{baseUrl}}/auth/register", "body": { "mode": "raw", "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"password123\",\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\"\n}" }, "header": [ { "key": "Content-Type", "value": "application/json" } ] } },
-        { "name": "Login", "request": { "method": "POST", "url": "{{baseUrl}}/auth/login", "body": { "mode": "raw", "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"password123\"\n}" }, "header": [ { "key": "Content-Type", "value": "application/json" } ] } },
-        { "name": "Logout", "request": { "method": "POST", "url": "{{baseUrl}}/auth/logout", "header": [ { "key": "Authorization", "value": "Bearer {{accessToken}}" } ] } },
-        { "name": "Refresh Token", "request": { "method": "POST", "url": "{{baseUrl}}/auth/refresh", "body": { "mode": "raw", "raw": "{\n  \"refreshToken\": \"{{refreshToken}}\"\n}" }, "header": [ { "key": "Content-Type", "value": "application/json" } ] } },
-        { "name": "Reset Password", "request": { "method": "POST", "url": "{{baseUrl}}/auth/reset-password", "body": { "mode": "raw", "raw": "{\n  \"email\": \"user@example.com\"\n}" }, "header": [ { "key": "Content-Type", "value": "application/json" } ] } }
+        { "name": "Register", "request": { "method": "POST", "url": "{{baseUrl}}/api/auth/register", "body": { "mode": "raw", "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"password123\",\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\"\n}" }, "header": [ { "key": "Content-Type", "value": "application/json" } ] } },
+        { "name": "Login", "request": { "method": "POST", "url": "{{baseUrl}}/api/auth/login", "body": { "mode": "raw", "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"password123\"\n}" }, "header": [ { "key": "Content-Type", "value": "application/json" } ] } },
+        { "name": "Logout", "request": { "method": "POST", "url": "{{baseUrl}}/api/auth/logout", "header": [ { "key": "Authorization", "value": "Bearer {{accessToken}}" } ] } },
+        { "name": "Refresh Token", "request": { "method": "POST", "url": "{{baseUrl}}/api/auth/refresh", "body": { "mode": "raw", "raw": "{\n  \"refreshToken\": \"{{refreshToken}}\"\n}" }, "header": [ { "key": "Content-Type", "value": "application/json" } ] } },
+        { "name": "Reset Password", "request": { "method": "POST", "url": "{{baseUrl}}/api/auth/reset-password", "body": { "mode": "raw", "raw": "{\n  \"email\": \"user@example.com\"\n}" }, "header": [ { "key": "Content-Type", "value": "application/json" } ] } }
       ]
     },
     {

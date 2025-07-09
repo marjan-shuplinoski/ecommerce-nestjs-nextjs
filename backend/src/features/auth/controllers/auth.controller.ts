@@ -14,7 +14,7 @@ export class AuthController {
   constructor(
     private readonly authService: AuthService,
     private readonly notificationService: NotificationService,
-  ) {}
+  ) { }
 
   @Post('register')
   @ApiOperation({ summary: 'Register a new user' })
@@ -39,9 +39,9 @@ export class AuthController {
   @ApiOperation({ summary: 'Login user' })
   @ApiBody({ type: LoginDto })
   @ApiResponse({ status: 200, description: 'Login successful.' })
-  login(@Body() dto: LoginDto, @Res() res: Response) {
+  async login(@Body() dto: LoginDto, @Res() res: Response) {
     try {
-      const tokens = this.authService.login();
+      const tokens = await this.authService.login({ email: dto.email, password: dto.password });
       return res.status(200).json({
         data: tokens,
         notification: this.notificationService.notifySuccess('Login successful'),
@@ -75,12 +75,12 @@ export class AuthController {
   @Post('refresh')
   @ApiOperation({ summary: 'Refresh JWT token' })
   @ApiResponse({ status: 200, description: 'Token refreshed.' })
-  refresh(@Body('refreshToken') refreshToken: string, @Res() res: Response) {
+  async refresh(@Body('refreshToken') refreshToken: string, @Res() res: Response) {
     try {
-      const tokens = this.authService.refresh();
-      return res.status(200).json({
-        data: tokens,
-        notification: this.notificationService.notifySuccess('Token refreshed'),
+      // TODO: Implement real refresh token validation and user extraction
+      // For now, return 401
+      return res.status(401).json({
+        notification: this.notificationService.notifyError('Invalid refresh token'),
       });
     } catch (error: unknown) {
       const err = error as Error;

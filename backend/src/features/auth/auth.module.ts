@@ -10,6 +10,8 @@ import { RefreshTokenGuard } from './guards/refresh-token.guard';
 import { RolesGuard } from './guards/roles.guard';
 import { NotificationService } from '../../shared/notification';
 import { AuthService } from './services/auth.service';
+import { AuthController } from './controllers/auth.controller';
+import { UserModule } from '../user/user.module';
 
 @Module({
   imports: [
@@ -23,7 +25,9 @@ import { AuthService } from './services/auth.service';
         signOptions: { expiresIn: '15m' },
       }),
     }),
+    UserModule,
   ],
+  controllers: [AuthController],
   providers: [
     AuthService,
     JwtService,
@@ -36,4 +40,4 @@ import { AuthService } from './services/auth.service';
   ],
   exports: [JwtService, JwtAuthGuard, RefreshTokenGuard, RolesGuard, AuthService],
 })
-export class AuthModule {}
+export class AuthModule { }
