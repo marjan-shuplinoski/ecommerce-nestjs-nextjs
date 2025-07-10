@@ -1,15 +1,15 @@
 # Cart Service - TODO
 
 ## Overview
-- **Status**: Done
+- **Status**: Completed
 - **Priority**: P0
-- **Target Date**: 2025-07-08
+- **Target Date**: 2025-07-10
 - **Assigned To**: @marjan
 - **Created**: 2024-06-01
-- **Last Updated**: 2025-07-08
+- **Last Updated**: 2025-07-10
 
 ## Description
-All cart service logic, DTOs, controller, and tests implemented and lint/type clean. All requirements traceable to PRD. RBAC/JWT and notification integration complete.
+All cart service logic, DTOs, controller, and tests implemented and lint/type clean. All requirements traceable to PRD. RBAC/JWT and notification integration complete. Frontend UI/UX, state management, and tests are now fully implemented.
 
 ## Completed
 - [x] Define Cart and CartItem schemas/types
@@ -24,6 +24,10 @@ All cart service logic, DTOs, controller, and tests implemented and lint/type cl
 - [x] Add E2E test coverage for all endpoints
 - [x] Add RBAC/JWT protection for all endpoints
 - [x] Integrate notification for all cart actions
+- [x] Implement CartPage, CartItem, CartSidebar, CartSummary, QuantitySelector, EmptyCart components
+- [x] Implement useCart hook for state management
+- [x] Integrate notification system in frontend
+- [x] Add Jest tests for all frontend components and hooks
 
 ## Tasks
 ### Backend
@@ -32,7 +36,10 @@ All cart service logic, DTOs, controller, and tests implemented and lint/type cl
 - [x] Notification integration (complete)
 
 ### Frontend
-- [ ] Not in scope
+- [x] CartPage, CartItem, CartSidebar, CartSummary, QuantitySelector, EmptyCart
+- [x] useCart hook
+- [x] Notification integration
+- [x] Jest tests for all components and hooks
 
 ## Dependencies
 - [ ] None
@@ -41,8 +48,12 @@ All cart service logic, DTOs, controller, and tests implemented and lint/type cl
 ### Unit Tests
 - [x] Service logic
 - [x] Controller endpoints
+- [x] CartPage renders items and sidebar
+- [x] CartItem handles quantity and removal
+- [x] useCart manages state and persistence
 ### Integration Tests
 - [x] In-memory MongoDB
+- [x] Cart operations update UI and storage
 ### E2E Tests
 - [x] All endpoints covered
 
