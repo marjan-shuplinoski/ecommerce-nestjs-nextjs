@@ -3,7 +3,13 @@ import Image from "next/image";
 export default function Home() {
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
+      <header>
+        <h1 className="sr-only">Ecommerce App</h1>
+      </header>
+      <main
+        className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start"
+        aria-label="Main content"
+      >
         <Image
           className="dark:invert"
           src="/next.svg"
@@ -24,13 +30,13 @@ export default function Home() {
             Save and see your changes instantly.
           </li>
         </ol>
-
         <div className="flex gap-4 items-center flex-col sm:flex-row">
           <a
             className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
             href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="Deploy now on Vercel"
           >
             <Image
               className="dark:invert"
@@ -46,6 +52,7 @@ export default function Home() {
             href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="Read Next.js documentation"
           >
             Read our docs
           </a>
@@ -57,6 +64,7 @@ export default function Home() {
           href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
           target="_blank"
           rel="noopener noreferrer"
+          aria-label="Learn Next.js"
         >
           <Image
             aria-hidden
@@ -72,6 +80,7 @@ export default function Home() {
           href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
           target="_blank"
           rel="noopener noreferrer"
+          aria-label="View Next.js examples"
         >
           <Image
             aria-hidden
@@ -87,6 +96,7 @@ export default function Home() {
           href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
           target="_blank"
           rel="noopener noreferrer"
+          aria-label="Go to nextjs.org"
         >
           <Image
             aria-hidden
